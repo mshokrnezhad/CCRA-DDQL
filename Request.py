@@ -5,12 +5,11 @@ rnd = np.random
 
 
 class Request:
-    def __init__(self, NUM_REQUESTS, NODES, REQUESTS_ENTRY_NODES, SWITCH="srv_plc", SEED=4, CAPACITY_REQUIREMENT_LB=5,
+    def __init__(self, NUM_REQUESTS, NODES, REQUESTS_ENTRY_NODES, SEED=4, CAPACITY_REQUIREMENT_LB=5,
                  CAPACITY_REQUIREMENT_UB=6, BW_REQUIREMENT_LB=5, BW_REQUIREMENT_UB=6, DLY_REQUIREMENT_LB=10,
                  DLY_REQUIREMENT_UB=11, BURST_SIZE_LB=5, BURST_SIZE_UB=6):
 
         rnd.seed(SEED)
-        self.SWITCH = SWITCH
         self.NUM_REQUESTS = NUM_REQUESTS
         self.NODES = NODES
         self.REQUESTS_ENTRY_NODES = REQUESTS_ENTRY_NODES
@@ -27,7 +26,6 @@ class Request:
         self.BW_REQUIREMENTS = self.initialize_bw_requirements()
         self.DELAY_REQUIREMENTS = self.initialize_delay_requirements()
         self.BURST_SIZES = self.initialize_burst_sizes()
-        # self.STATE = self.get_state(self.SWITCH)
 
     def initialize_capacity_requirements(self):
         capacity_requirements = np.array([rnd.randint(self.CAPACITY_REQUIREMENT_LB, self.CAPACITY_REQUIREMENT_UB)
@@ -61,27 +59,20 @@ class Request:
         return state
     """
 
-    def get_state(self, switch="srv_plc", assigned_nodes=[]):
+    def get_state(self, switch="none", assigned_nodes=[]):
         state = []
 
         active_requests = np.array([1 if i in self.REQUESTS else 0 for i in range(self.NUM_REQUESTS)])
-        per_node_capacity_requirements = np.array([np.sum((np.array(self.REQUESTS_ENTRY_NODES == i).astype(int)) *
-                                                          self.CAPACITY_REQUIREMENTS) for i in self.NODES])
-        per_node_bw_requirements = np.array([np.sum((np.array(self.REQUESTS_ENTRY_NODES == i).astype(int)) *
-                                                    self.BW_REQUIREMENTS) for i in self.NODES])
-        per_node_burst_sizes = np.array([np.sum((np.array(self.REQUESTS_ENTRY_NODES == i).astype(int)) *
-                                                self.BURST_SIZES) for i in self.NODES])
+        per_node_capacity_requirements = np.array([np.sum((np.array(self.REQUESTS_ENTRY_NODES == i).astype(int)) * self.CAPACITY_REQUIREMENTS) for i in self.NODES])
+        per_node_bw_requirements = np.array([np.sum((np.array(self.REQUESTS_ENTRY_NODES == i).astype(int)) * self.BW_REQUIREMENTS) for i in self.NODES])
+        per_node_burst_sizes = np.array([np.sum((np.array(self.REQUESTS_ENTRY_NODES == i).astype(int)) * self.BURST_SIZES) for i in self.NODES])
 
         if switch == "srv_plc":
-            state = np.concatenate((active_requests, per_node_capacity_requirements, per_node_bw_requirements,
-                                    self.DELAY_REQUIREMENTS, per_node_burst_sizes))
+            state = np.concatenate((active_requests, per_node_capacity_requirements, per_node_bw_requirements, self.DELAY_REQUIREMENTS, per_node_burst_sizes))
 
         if switch == "pri_asg":
-            per_destination_bw_requirements = np.array([np.sum((np.array(assigned_nodes == i).astype(int)) *
-                                                               self.BW_REQUIREMENTS) for i in self.NODES])
-
-            state = np.concatenate((active_requests, per_node_capacity_requirements, per_node_bw_requirements,
-                                    self.DELAY_REQUIREMENTS, per_node_burst_sizes, per_destination_bw_requirements))
+            per_destination_bw_requirements = np.array([np.sum((np.array(assigned_nodes == i).astype(int)) * self.BW_REQUIREMENTS) for i in self.NODES])
+            state = np.concatenate((active_requests, per_node_capacity_requirements, per_node_bw_requirements, self.DELAY_REQUIREMENTS, per_node_burst_sizes, per_destination_bw_requirements))
 
         return state
 

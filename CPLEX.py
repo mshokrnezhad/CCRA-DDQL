@@ -210,7 +210,7 @@ class CPLEX:
 
         return mdl
 
-    def solve(self, action, switch="srv_plc", assigned_nodes=[], assigned_priorities=[], assigned_paths=[]):
+    def solve(self, action, switch="none", assigned_nodes=[], assigned_priorities=[], assigned_paths=[]):
         mdl, z, g, g_sup, req_flw, res_flw, flw, p, req_pp, res_pp, req_d, res_d, d = self.initialize_model()
         mdl = self.define_model(mdl, z, g, g_sup, req_flw, res_flw, flw, p, req_pp, res_pp, req_d, res_d, d)
 

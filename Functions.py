@@ -30,7 +30,7 @@ def calculate_input_shape(NUM_NODES, NUM_REQUESTS, NUM_PRIORITY_LEVELS, switch):
     return counter
 
 
-def parse_state(state, NUM_NODES, NUM_REQUESTS, env_obj, switch="srv_plc"):
+def parse_state(state, NUM_NODES, NUM_REQUESTS, env_obj, switch="none"):
     np.set_printoptions(suppress=True, linewidth=100)
     counter = 0
 

@@ -10,22 +10,19 @@ from Priority_Assignment import Priority_Assignment
 NUM_NODES = 12
 NUM_PRIORITY_LEVELS = 1
 NUM_REQUESTS = 10
-NUM_SERVICES = 3
+NUM_SERVICES = 1
 
 env_obj = Environment(NUM_NODES, NUM_PRIORITY_LEVELS, NUM_REQUESTS, NUM_SERVICES)
 
 best_score = -np.inf
 load_checkpoint = False
 EPSILON = 0 if load_checkpoint else 1
-n_games = 500  # 1 for one sample
+n_games = 1 # 1 for one sample
 # NUM_ACTIONS = (NUM_NODES-len(env_obj.net_obj.get_first_tier_nodes()))
 NUM_ACTIONS = NUM_NODES
 file_name = str(NUM_NODES)+"_"+str(NUM_PRIORITY_LEVELS)+"_"+str(NUM_REQUESTS)+"_"+str(NUM_SERVICES)+"_"+str(n_games)
 figure_file = file_name + '.png'
 
-print(env_obj.get_state())
-
-"""
 agent = Agent(EPSILON, NUM_ACTIONS, env_obj.get_state().size, file_name)
 
 if load_checkpoint:
@@ -37,9 +34,11 @@ scores, eps_history, steps_array = [], [], []
 for i in range(n_games):
     done = False
     # SEED = np.random.randint(1, 1000)
-
-    SEED = int(random.randrange(sys.maxsize)/(10 ** 15))
+    # SEED = int(random.randrange(sys.maxsize)/(10 ** 15))
+    SEED = 4
     env_obj.reset(SEED)
+"""
+
     state = env_obj.get_state()
 
     score = 0
