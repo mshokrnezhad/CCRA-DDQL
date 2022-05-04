@@ -25,7 +25,7 @@ class Priority_Assignment(object):
         self.agent = Agent(GAMMA=0.99, EPSILON=self.EPSILON, LR=0.0001, NUM_ACTIONS=self.NUM_ACTIONS,
                            INPUT_SHAPE=self.INPUT_SHAPE, MEMORY_SIZE=50000, BATCH_SIZE=32,
                            EPSILON_MIN=0.1, EPSILON_DEC=5e-4, REPLACE_COUNTER=10000, NAME=self.FILE_NAME,
-                           CHECKPOINT_DIR='models/')
+                           CHECKPOINT_DIR='../models/')
 
     def get_allocations(self, srv_plc_q):
         try:

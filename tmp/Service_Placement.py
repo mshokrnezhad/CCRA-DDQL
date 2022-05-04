@@ -23,7 +23,7 @@ class Service_Placement(object):
             NUM_REQUESTS) + "_" + str(NUM_SERVICES) + "_" + str(self.NUM_GAMES)
         self.agent = Agent(GAMMA=0.99, EPSILON=self.EPSILON, LR=0.0001, NUM_ACTIONS=self.NUM_ACTIONS,
                            INPUT_SHAPE=self.INPUT_SHAPE, MEMORY_SIZE=3000, BATCH_SIZE=32, EPSILON_MIN=0.1,
-                           EPSILON_DEC=36e-5, REPLACE_COUNTER=10000, NAME=self.FILE_NAME, CHECKPOINT_DIR='models/')
+                           EPSILON_DEC=36e-5, REPLACE_COUNTER=10000, NAME=self.FILE_NAME, CHECKPOINT_DIR='../models/')
 
     def train(self):
         f = open("txts/" + self.FILE_NAME + "_" + str(int(random.randrange(sys.maxsize) / (10 ** 15))) + '.txt', "a")
