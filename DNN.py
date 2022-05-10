@@ -8,14 +8,15 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 class DNN(nn.Module):
-    def __init__(self, LR, NUM_ACTIONS, INPUT_SHAPE, NAME, CHECKPOINT_DIR, H1=512, H2=128, H3=32):
+    def __init__(self, LR, NUM_ACTIONS, INPUT_SHAPE, NAME, CHECKPOINT_DIR, H1=256, H2=256, H3=256, H4=256):
         super().__init__()
         self.CHECKPOINT_DIR = CHECKPOINT_DIR
         self.CHECKPOINT_FILE = os.path.join(self.CHECKPOINT_DIR, NAME)
         self.fc1 = nn.Linear(INPUT_SHAPE, H1)
         self.fc2 = nn.Linear(H1, H2)
         self.fc3 = nn.Linear(H2, H3)
-        self.fc4 = nn.Linear(H3, NUM_ACTIONS)
+        self.fc4 = nn.Linear(H3, H4)
+        self.fc5 = nn.Linear(H4, NUM_ACTIONS)
         self.optimizer = opt.Adam(self.parameters(), lr=LR)
         self.criterion = nn.MSELoss()
 
@@ -23,9 +24,10 @@ class DNN(nn.Module):
         out1 = F.relu(self.fc1(state))
         out2 = F.relu(self.fc2(out1))
         out3 = F.relu(self.fc3(out2))
-        out4 = self.fc4(out3)
+        out4 = F.relu(self.fc4(out3))
+        out5 = self.fc5(out4)
 
-        return out4
+        return out5
 
     def save_checkpoint(self):
         print(f'Saving {self.CHECKPOINT_FILE}...')

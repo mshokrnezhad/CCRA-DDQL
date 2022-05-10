@@ -39,7 +39,7 @@ class Network:
         self.LINKS_MATRIX = self.initialize_links_matrix()
         self.LINK_BWS_DICT, self.LINK_BWS_MATRIX, self.LINK_BWS = self.initialize_link_bws()
         self.LINK_COSTS_DICT, self.LINK_COSTS_MATRIX, self.LINK_COSTS = self.initialize_link_costs()
-        self.BURST_SIZE_LIMIT_PER_PRIORITY = self.find_burst_size_limit_per_priority()
+        self.BURST_SIZE_LIMIT_PER_PRIORITY, self.LINK_BURSTS = self.find_burst_size_limit_per_priority()
         self.LINK_BWS_LIMIT_PER_PRIORITY_DICT, self.LINK_BWS_LIMIT_PER_PRIORITY = self.find_link_bws_limit_per_priority()
         self.BURST_SIZE_CUM_LIMIT_PER_PRIORITY = self.find_burst_size_cum_limit_per_priority()
         self.LINK_BWS_CUM_LIMIT_PER_PRIORITY = self.find_link_bws_cum_limit_per_priority()
@@ -79,16 +79,13 @@ class Network:
 
     def initialize_dc_capacities(self):
 
-        dc_capacities = np.array([rnd.randint(self.get_tier_num(i) * self.DC_CAPACITY_UNIT, (self.get_tier_num(i) + 1)
-                                              * self.DC_CAPACITY_UNIT) for i in self.NODES])
+        dc_capacities = np.array([rnd.randint(self.get_tier_num(i) * self.DC_CAPACITY_UNIT, (self.get_tier_num(i) + 1) * self.DC_CAPACITY_UNIT) for i in self.NODES])
 
         return dc_capacities
 
     def initialize_dc_costs(self):
 
-        dc_costs = np.array([rnd.randint((self.NUM_TIERS - self.get_tier_num(i) - 1) * self.DC_COST_UNIT,
-                                         (self.NUM_TIERS - self.get_tier_num(i)) * self.DC_COST_UNIT)
-                             for i in self.NODES])
+        dc_costs = np.array([rnd.randint((self.NUM_TIERS - self.get_tier_num(i) - 1) * self.DC_COST_UNIT, (self.NUM_TIERS - self.get_tier_num(i)) * self.DC_COST_UNIT) for i in self.NODES])
 
         return dc_costs
 
@@ -175,13 +172,10 @@ class Network:
 
     def find_burst_size_limit_per_priority(self):
 
-        # burst_size_limit_per_priority = [(self.NUM_PRIORITY_LEVELS + 1 - i) * self.BURST_SIZE_LIMIT if i > 0 else 0
-        #                                  for i in self.PRIORITIES]
-        burst_size_limit_per_priority = np.array([((self.NUM_PRIORITY_LEVELS + 1 - i) /
-                                                   np.array(self.PRIORITIES).sum()) * self.BURST_SIZE_LIMIT
-                                                  if i > 0 else 0 for i in self.PRIORITIES])
+        burst_size_limit_per_priority = np.array([((self.NUM_PRIORITY_LEVELS + 1 - i) / np.array(self.PRIORITIES).sum()) * self.BURST_SIZE_LIMIT if i > 0 else 0 for i in self.PRIORITIES])
+        link_bursts = np.array([burst_size_limit_per_priority for l in self.LINKS])
 
-        return burst_size_limit_per_priority.astype(int)
+        return burst_size_limit_per_priority.astype(int), link_bursts.astype(int)
 
     def find_link_bws_limit_per_priority(self):
 
@@ -210,8 +204,7 @@ class Network:
 
     def find_burst_size_cum_limit_per_priority(self):
 
-        burst_size_cum_limit_per_priority = [np.array(self.BURST_SIZE_LIMIT_PER_PRIORITY[:i + 1]).sum()
-                                             for i in self.PRIORITIES]
+        burst_size_cum_limit_per_priority = [np.array(self.BURST_SIZE_LIMIT_PER_PRIORITY[:i + 1]).sum() for i in self.PRIORITIES]
 
         return np.array(burst_size_cum_limit_per_priority)
 
@@ -224,8 +217,7 @@ class Network:
                 if i > j and (i, j) in self.LINKS_LIST:
                     array = []
                     for n in self.PRIORITIES:
-                        array.append(
-                            self.LINK_BWS_LIMIT_PER_PRIORITY_DICT[(i, j), n])
+                        array.append(self.LINK_BWS_LIMIT_PER_PRIORITY_DICT[(i, j), n])
                     for n in self.PRIORITIES:
                         link_bws_cum_limit_per_priority[(i, j), n] = np.array(array)[:n].sum()
                         link_bws_cum_limit_per_priority[(j, i), n] = np.array(array)[:n].sum()
@@ -244,7 +236,7 @@ class Network:
                 if i > j and (i, j) in self.LINKS_LIST:
                     for n in self.PRIORITIES:
                         if n > 0:
-                            delay = (self.BURST_SIZE_CUM_LIMIT_PER_PRIORITY[n] + self.PACKET_SIZE) / (self.LINK_BWS_DICT[i, j] - self.LINK_BWS_CUM_LIMIT_PER_PRIORITY[(i, j), n]) + self.PACKET_SIZE / self.LINK_BWS_DICT[i, j]
+                            delay = ((self.BURST_SIZE_CUM_LIMIT_PER_PRIORITY[n] + self.PACKET_SIZE) / (self.LINK_BWS_DICT[i, j] - self.LINK_BWS_CUM_LIMIT_PER_PRIORITY[(i, j), n])) + self.PACKET_SIZE / self.LINK_BWS_DICT[i, j]
                             link_delays_dict[(i, j), n] = round(delay, 3)
                             link_delays_dict[(j, i), n] = round(delay, 3)
                             link_delays_matrix[n, i, j] = round(delay, 3)
@@ -340,16 +332,18 @@ class Network:
     def get_state(self, entry_node=0, switch="none"):
 
         # print(self.DC_CAPACITIES)
-        norm = np.linalg.norm(self.DC_CAPACITIES)
+        # norm = np.linalg.norm(self.DC_CAPACITIES)
+        norm = self.NUM_TIERS * self.DC_CAPACITY_UNIT
         # print(norm)
-        normal_dc_capacities = self.DC_CAPACITIES / norm
+        normal_dc_capacities = np.round((self.DC_CAPACITIES / norm), 3)
         # print(normal_dc_capacities)
         # print("\n")
 
         # print(self.DC_COSTS)
-        norm = np.linalg.norm(self.DC_COSTS)
+        # norm = np.linalg.norm(self.DC_COSTS)
+        norm = self.NUM_TIERS * self.DC_COST_UNIT
         # print(norm)
-        normal_dc_costs = self.DC_COSTS / norm
+        normal_dc_costs = np.round((self.DC_COSTS / norm), 3)
         # print(normal_dc_costs)
         # print("\n")
 
@@ -371,14 +365,15 @@ class Network:
                     path_bws_per_head_per_tail[pub][i] = self.LINK_BWS[np.where(self.LINKS_PATHS_MATRIX[:, p] == 1)[0]].min()
                     i += 1
                 else:
-                    path_bws_per_head_per_tail[pub][i] = self.LINK_BW_LB
+                    path_bws_per_head_per_tail[pub][i] = 0
                     i += 1
         # print("path_bws_per_head_per_tail")
         # print(path_bws_per_head_per_tail)
         # print(path_bws_per_head_per_tail.reshape(1, -1)[0])
-        norm = np.linalg.norm(path_bws_per_head_per_tail.reshape(1, -1)[0])
+        # norm = np.linalg.norm(path_bws_per_head_per_tail.reshape(1, -1)[0])
+        norm = self.LINK_BW_UB
         # print(norm)
-        normal_path_bws_per_head_per_tail = path_bws_per_head_per_tail.reshape(1, -1)[0] / norm
+        normal_path_bws_per_head_per_tail = np.round((path_bws_per_head_per_tail.reshape(1, -1)[0] / norm), 3)
         # print(normal_path_bws_per_head_per_tail)
         # print("\n")
 
@@ -390,14 +385,15 @@ class Network:
                     path_costs_per_head_per_tail[pub][i] = self.LINK_COSTS[np.where(self.LINKS_PATHS_MATRIX[:, p] == 1)[0]].sum()
                     i += 1
                 else:
-                    path_costs_per_head_per_tail[pub][i] = self.LINK_COST_LB
+                    path_costs_per_head_per_tail[pub][i] = self.LINK_COST_UB
                     i += 1
         # print("path_costs_per_head_per_tail")
         # print(path_costs_per_head_per_tail)
         # print(path_costs_per_head_per_tail.reshape(1, -1)[0])
-        norm = np.linalg.norm(path_costs_per_head_per_tail.reshape(1, -1)[0])
+        # norm = np.linalg.norm(path_costs_per_head_per_tail.reshape(1, -1)[0])
+        norm = self.find_max_path_cost()
         # print(norm)
-        normal_path_costs_per_head_per_tail = path_costs_per_head_per_tail.reshape(1, -1)[0] / norm
+        normal_path_costs_per_head_per_tail = np.round((path_costs_per_head_per_tail.reshape(1, -1)[0] / norm), 3)
         # print(normal_path_costs_per_head_per_tail)
         # print("\n")
 
@@ -420,9 +416,10 @@ class Network:
         # print("path_delays_per_head_per_tail")
         # print(path_delays_per_head_per_tail)
         # print(path_delays_per_head_per_tail.reshape(1, -1)[0])
-        norm = np.linalg.norm(path_delays_per_head_per_tail.reshape(1, -1)[0])
+        # norm = np.linalg.norm(path_delays_per_head_per_tail.reshape(1, -1)[0])
+        norm = self.find_max_path_delay()
         # print(norm)
-        normal_path_delays_per_head_per_tail = path_delays_per_head_per_tail.reshape(1, -1)[0] / norm
+        normal_path_delays_per_head_per_tail = np.round((path_delays_per_head_per_tail.reshape(1, -1)[0] / norm), 3)
         # print(normal_path_delays_per_head_per_tail)
         # print("\n")
         # print("\n")
@@ -432,24 +429,54 @@ class Network:
 
         return state
 
-    """
+    def find_max_action_cost(self):
+        c1 = 0
+        for p in self.PATHS:
+            c2 = 0
+            for l in np.where(self.LINKS_PATHS_MATRIX[:, p] == 1)[0]:
+                c2 += self.LINK_COSTS[l]
+            if c2 > c1:
+                c1 = c2
+        c1 *= 2
+        c1 += self.DC_COSTS.max()
+
+        return c1
+
+    def find_max_path_cost(self):
+        c1 = 0
+        for p in self.PATHS:
+            c2 = 0
+            for l in np.where(self.LINKS_PATHS_MATRIX[:, p] == 1)[0]:
+                c2 += self.LINK_COSTS[l]
+            if c2 > c1:
+                c1 = c2
+
+        return c1
+
+    def find_max_path_delay(self):
+        d1 = 0
+        for p in self.PATHS:
+            d2 = 0
+            for l in np.where(self.LINKS_PATHS_MATRIX[:, p] == 1)[0]:
+                d2 += self.LINK_DELAYS[l][range(1, self.NUM_PRIORITY_LEVELS+1)].max()
+            if d2 > d1:
+                d1 = d2
+
+        return d1
+
     def update_state(self, action, result, req_obj):
 
         # req_id = np.where(req_obj.REQUESTS == action["req_id"])[0][0]
-        req_id = action["req_id"]
-        node_id = result["g"][req_id]  # action["node_id"]
-        priority_level = result["p"][req_id]
+        r = action["req_id"]
+        v = result["g"]  # action["node_id"]
+        k = result["k"]
+        req_path = result["req_path"]
+        rpl_path = result["rpl_path"]
 
-        self.DC_CAPACITIES[node_id] -= req_obj.CAPACITY_REQUIREMENTS[req_id]
-        for (i, j) in result["req_flw"][req_id]:
-            self.LINK_BWS_DICT[(i, j)] -= req_obj.BW_REQUIREMENTS[req_id]
-            self.LINK_BWS_MATRIX[i, j] -= req_obj.BW_REQUIREMENTS[req_id]
-        for (i, j) in result["res_flw"][req_id]:
-            self.LINK_BWS_DICT[(i, j)] -= req_obj.BW_REQUIREMENTS[req_id]
-            self.LINK_BWS_MATRIX[i, j] -= req_obj.BW_REQUIREMENTS[req_id]
-        self.BURST_SIZE_LIMIT_PER_PRIORITY[priority_level] -= req_obj.BURST_SIZES[req_id]
-        self.LINK_BWS_LIMIT_PER_PRIORITY = self.find_link_bws_limit_per_priority()
-        self.BURST_SIZE_CUM_LIMIT_PER_PRIORITY = self.find_burst_size_cum_limit_per_priority()
-        self.LINK_BWS_CUM_LIMIT_PER_PRIORITY = self.find_link_bws_cum_limit_per_priority()
-        self.LINK_DELAYS_DICT, self.LINK_DELAYS_MATRIX = self.initialize_link_delays()
-    """
+        self.DC_CAPACITIES[v] -= req_obj.CAPACITY_REQUIREMENTS[r]
+        for l in np.where(self.LINKS_PATHS_MATRIX[:, req_path] == 1)[0]:
+            self.LINK_BWS[l] -= req_obj.BW_REQUIREMENTS[r]
+            self.LINK_BURSTS[l, k] -= req_obj.BURST_SIZES[r]
+        for l in np.where(self.LINKS_PATHS_MATRIX[:, rpl_path] == 1)[0]:
+            self.LINK_BWS[l] -= req_obj.BW_REQUIREMENTS[r]
+            self.LINK_BURSTS[l, k] -= req_obj.BURST_SIZES[r]

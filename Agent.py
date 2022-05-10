@@ -6,7 +6,7 @@ rnd = np.random
 
 
 class Agent(object):
-    def __init__(self, EPSILON, NUM_ACTIONS, INPUT_SHAPE, NAME="", GAMMA=0.99, LR=0.0001, MEMORY_SIZE=50000, BATCH_SIZE=32, EPSILON_MIN=0.01, EPSILON_DEC=1e-3, REPLACE_COUNTER=10000, CHECKPOINT_DIR='models/'):
+    def __init__(self, EPSILON, NUM_ACTIONS, INPUT_SHAPE, NAME="", GAMMA=0.99, LR=0.0001, MEMORY_SIZE=2048, BATCH_SIZE=32, EPSILON_MIN=0.01, EPSILON_DEC=1e-3, REPLACE_COUNTER=1000, CHECKPOINT_DIR='models/'):
         self.GAMMA = GAMMA
         self.EPSILON = EPSILON
         self.LR = LR
@@ -45,10 +45,10 @@ class Agent(object):
                 state = T.tensor(state, dtype=T.float)
                 expected_values = self.q_eval.forward(state)
                 action = T.argmax(expected_values).item()
-                print("Q:", action + 4)
+                # print("Q:", action)
             else:
                 action = rnd.choice(self.ACTION_SPACE)
-                print("R:", action + 4)
+                # print("R:", action)
         else:
             state = T.tensor(state, dtype=T.float)  # state = T.tensor([state], dtype=T.float)
             expected_values = self.q_eval.forward(state)
@@ -57,7 +57,7 @@ class Agent(object):
         return action
 
     def replace_target_network(self):
-        if self.REPLACE_COUNTER is not None and self.learning_counter % self.REPLACE_COUNTER == 0:
+        if self.learning_counter % self.REPLACE_COUNTER == 0:
             self.q_next.load_state_dict(self.q_eval.state_dict())
 
     def decrement_epsilon(self):

@@ -69,7 +69,20 @@ x = [i+1 for i in range(len(scores))]
 plot_learning_curve(steps_array, scores/(10000*NUM_REQUESTS), eps_history, filename=figure_file)
 """
 
+import matplotlib.pyplot as plt
+import numpy as np
 
+
+# make the data
+np.random.seed(3)
+x = range(1,1000)
+y = [1/i for i in x]
+
+# plot
+fig, ax = plt.subplots()
+
+ax.scatter(x, y)
+plt.show()
 
 
 

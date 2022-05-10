@@ -3,6 +3,7 @@ from Request import Request
 from Service import Service
 from Functions import specify_requests_entry_nodes, assign_requests_to_services
 from CPLEX import CPLEX
+from WFCCRA import WFCCRA
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
@@ -22,9 +23,10 @@ class Environment:
         self.req_obj = Request(NUM_REQUESTS, self.net_obj.NODES, self.REQUESTS_ENTRY_NODES)
         self.srv_obj = Service(NUM_SERVICES)
         self.REQUESTED_SERVICES = assign_requests_to_services(np.arange(NUM_SERVICES), np.arange(NUM_REQUESTS))
-        self.model_obj = CPLEX(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES, self.REQUESTS_ENTRY_NODES)
+        # self.model_obj = CPLEX(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES, self.REQUESTS_ENTRY_NODES)
+        self.heu_obj = WFCCRA(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES, self.REQUESTS_ENTRY_NODES)
 
-    def get_state(self, entry_node=0, assigned_nodes=[], switch="none"):
+    def get_state(self, entry_node=0, switch="none"):
         net_state = self.net_obj.get_state(entry_node, switch)
         # req_state = self.req_obj.get_state(assigned_nodes)
         # env_state = np.concatenate((req_state, net_state))
@@ -35,36 +37,26 @@ class Environment:
 
         return env_state
 
-    def step(self, action, switch, assigned_nodes=[]):
-        result = self.model_obj.solve(action, switch, assigned_nodes)
-        optimum_result = self.model_obj.solve({}, switch, assigned_nodes)
-        accuracy = 0
+    def step(self, action, switch="none"):
+        result = self.heu_obj.solve_per_req(action, switch)
+        # optimum_result = self.model_obj.solve({}, switch, assigned_nodes)
+        # accuracy = 0
 
-        print("*:   ", optimum_result["g"][action["req_id"]])
+        # print("*:   ", result["g"])
 
         if result["done"]:
             reward = 0
         else:
-            accuracy = result["OF"] / optimum_result["OF"]
-            reward = ((1 - ((result["OF"] - optimum_result["OF"]) / result["OF"])) ** 2) * 10000
-            """
-            if accuracy <= 1.1:
-                reward = 1
-            else:
-                # reward = 1/(result["OF"] - optimum_result["OF"])
-                # reward = round(reward, 5)
-                reward = 0
-            """
-
+            reward = self.net_obj.find_max_action_cost() - result["OF"]
             self.update_state(action, result)
 
-        resulted_state = self.get_state(switch, assigned_nodes)
+        resulted_state = self.get_state(result["pair"][0], switch)
 
-        return resulted_state, int(reward), result["done"] or len(self.req_obj.REQUESTS) == 0, result["info"], accuracy
+        return resulted_state, int(reward), result["done"], result["info"], result["OF"]
 
     def update_state(self, action, result):
         self.net_obj.update_state(action, result, self.req_obj)
-        self.req_obj.update_state(action)
+        # self.req_obj.update_state(action)
 
     def reset(self, SEED):
         # self.REQUESTS_ENTRY_NODES = specify_requests_entry_nodes(self.net_obj.FIRST_TIER_NODES, np.arange(self.NUM_REQUESTS), SEED)
