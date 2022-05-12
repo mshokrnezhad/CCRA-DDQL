@@ -167,10 +167,27 @@ def plot_learning_curve(x, scores, epsilons, filename=""):
     plt.show()
     plt.savefig(filename)
 
+def simple_plot(x, y, filename=""):
+    fig = plt.figure()
+    plt1 = fig.add_subplot(111, label="2")
 
-def save_list_to_file(list, dir, file_name, suffix):
-    full_name = dir + "_" + file_name + "_" + suffix + ".txt"
-    os.makedirs(os.path.dirname(full_name), exist_ok=True)
+    y_avg = np.empty(len(y))
+    for i in range(len(y)):
+        y_avg[i] = np.mean(y[max(0, i - 100):(i + 1)])
+
+    plt1.plot(x, y_avg, color="C1")
+    plt1.set_xlabel("Game Number", color="C1")
+    plt1.set_ylabel("OF", color="C1")
+    plt1.tick_params(axis="x", color="C1")
+    plt1.tick_params(axis="y", color="C1")
+
+    plt.show()
+    plt.savefig(filename)
+
+
+def save_list_to_file(list, dir, file_name):
+    full_name = dir + file_name + ".txt"
+    os.makedirs(os.path.dirname(dir), exist_ok=True)
     f = open(full_name, "w")
     for i in range(len(list)):
         if i < len(list) - 1:
@@ -178,3 +195,20 @@ def save_list_to_file(list, dir, file_name, suffix):
         else:
             f.write(str(list[i]))
     f.close()
+
+
+def read_list_from_file(dir, file_name, type, round_num=2):
+    f = open(dir + file_name, "r")  # opens the file in read mode
+    list = f.read().splitlines()  # puts the file into an array
+    f.close()
+    if type == "int":
+        return [int(element) for element in list]
+    if type == "float":
+        return [round(float(element), round_num) for element in list]
+
+
+def generate_seeds(num_seeds):
+    seeds = []
+    for i in range(num_seeds):
+        seeds.append(np.random.randint(1, 1000))
+    save_list_to_file(seeds, "inputs/", "SEEDS")

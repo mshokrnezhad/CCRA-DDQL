@@ -3,11 +3,11 @@ from Agent import Agent
 import numpy as np
 import random
 import sys
-from Functions import parse_state, plot_learning_curve, calculate_input_shape
+from Functions import parse_state, plot_learning_curve, calculate_input_shape, save_list_to_file, simple_plot
 
 
 class VNF_Placement(object):
-    def __init__(self, NUM_NODES, NUM_REQUESTS, NUM_SERVICES, NUM_PRIORITY_LEVELS, NUM_GAMES):
+    def __init__(self, NUM_NODES, NUM_REQUESTS, NUM_SERVICES, NUM_PRIORITY_LEVELS, NUM_GAMES, SEEDS):
         self.SWITCH = "vnf_plc"
         self.NUM_NODES = NUM_NODES
         self.NUM_REQUESTS = NUM_REQUESTS
@@ -15,36 +15,33 @@ class VNF_Placement(object):
         self.NUM_PRIORITY_LEVELS = NUM_PRIORITY_LEVELS
         self.NUM_GAMES = NUM_GAMES
         self.NUM_ACTIONS = NUM_NODES
+        self.SEEDS = SEEDS
         self.FILE_NAME = "V" + str(NUM_NODES) + "_K" + str(NUM_PRIORITY_LEVELS) + "_R" + str(NUM_REQUESTS) + "_S" + str(NUM_SERVICES) + "_G" + str(NUM_GAMES)
         self.env_obj = Environment(NUM_NODES, NUM_REQUESTS, NUM_SERVICES, NUM_PRIORITY_LEVELS)
         self.agent = Agent(self.NUM_ACTIONS, self.env_obj.get_state().size, self.FILE_NAME)
 
     def DDQL(self):
-        print("Aaaaaaa")
-        """
         best_reward = -np.inf
         num_steps = 0
-        rewards, epsilons, steps, ml_nums_act_reqs, ml_avg_ofs, opt_nums_act_reqs, opt_avg_ofs, accuracies = [], [], [], [], [], [], [], []
-        
-        for i in range(num_games):
-            SEED = np.random.randint(1, 1000)  # 4
-        
-            env_obj.reset(SEED)
-            state = env_obj.get_state()
+        rewards, epsilons, steps, ml_nums_act_reqs, ml_avg_ofs = [], [], [], [], []
+
+        for i in range(self.NUM_GAMES):
+            SEED = self.SEEDS[i]
+            self.env_obj.reset(SEED)
+            state = self.env_obj.get_state()
             game_reward = 0
             ml_game_num_act_reqs = 0
             ml_game_of = 0
-            for r in env_obj.req_obj.REQUESTS:
+            for r in self.env_obj.req_obj.REQUESTS:
                 ACTION_SEED = int(random.randrange(sys.maxsize) / (10 ** 15))  # 4
-                a = {"req_id": r, "node_id": agent.choose_action(state, ACTION_SEED)}
-                resulted_state, req_reward, done, info, req_of = env_obj.step(a, "none")
+                a = {"req_id": r, "node_id": self.agent.choose_action(state, ACTION_SEED)}
+                resulted_state, req_reward, done, info, req_of = self.env_obj.step(a, "none")
                 game_reward += req_reward
                 if not done:
                     ml_game_num_act_reqs += 1
                 ml_game_of += req_of
-                if not load_checkpoint:
-                    agent.store_transition(state, a["node_id"], req_reward, resulted_state, int(done))
-                    agent.learn()
+                self.agent.store_transition(state, a["node_id"], req_reward, resulted_state, int(done))
+                self.agent.learn()
                 state = resulted_state
                 num_steps += 1
             rewards.append(game_reward)
@@ -53,32 +50,41 @@ class VNF_Placement(object):
             ml_avg_game_of = 0 if ml_game_num_act_reqs == 0 else ml_game_of / ml_game_num_act_reqs
             ml_avg_ofs.append(ml_avg_game_of)
             avg_reward = np.mean(rewards[-100:])
-            epsilons.append(agent.EPSILON)
+            epsilons.append(self.agent.EPSILON)
             if avg_reward > best_reward:
-                if not load_checkpoint:
-                    agent.save_models()
+                self.agent.save_models()
                 best_reward = avg_reward
-        
-            env_obj.reset(SEED)
-            opt_results = env_obj.heu_obj.solve()
+            print('episode:', i, 'acc: %.3f, best_reward: %.0f, eps: %.4f' % (ml_avg_game_of, best_reward, self.agent.EPSILON), 'steps:', num_steps)
+
+        save_list_to_file(ml_nums_act_reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_nums_act_reqs")
+        save_list_to_file(ml_avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_avg_ofs")
+        save_list_to_file(rewards, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rewards")
+        save_list_to_file(epsilons, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_epsilons")
+
+        """
+        rewards = np.array(rewards)
+        x = [i + 1 for i in range(len(rewards))]
+        plot_learning_curve(range(self.NUM_GAMES), ml_avg_ofs, epsilons, filename=self.FILE_NAME + '.png')
+        """
+
+    def WF(self):
+        opt_nums_act_reqs, opt_avg_ofs = [], []
+
+        for i in range(self.NUM_GAMES):
+            SEED = self.SEEDS[i]
+            self.env_obj.reset(SEED)
+            opt_results = self.env_obj.heu_obj.solve()
             opt_game_num_act_reqs = opt_results["num_act_reqs"]
             opt_nums_act_reqs.append(opt_game_num_act_reqs)
             opt_avg_game_of = opt_results["avg_of"]
             opt_avg_ofs.append(opt_avg_game_of)
-        
-            accuracy = 1 - (abs(ml_avg_game_of - opt_avg_game_of) / opt_avg_game_of)
-            accuracies.append(accuracy)
-        
-            print('episode:', i, 'acc: %.3f, best_reward: %.0f, eps: %.4f' % (accuracy, best_reward, agent.EPSILON), 'steps:', num_steps)
-        
-        save_list_to_file(opt_nums_act_reqs, "results/" + file_name + "/", file_name, "opt_nums_act_reqs")
-        save_list_to_file(opt_avg_ofs, "results/" + file_name + "/", file_name, "opt_avg_ofs")
-        save_list_to_file(ml_nums_act_reqs, "results/" + file_name + "/", file_name, "ml_nums_act_reqs")
-        save_list_to_file(ml_avg_ofs, "results/" + file_name + "/", file_name, "ml_avg_ofs")
-        save_list_to_file(rewards, "results/" + file_name + "/", file_name, "rewards")
-        save_list_to_file(epsilons, "results/" + file_name + "/", file_name, "epsilons")
-        save_list_to_file(accuracies, "results/" + file_name + "/", file_name, "opt_vs_ml")
-        """
+            print('episode:', i, 'best_reward: %.0f' % opt_avg_game_of)
+
+        save_list_to_file(opt_nums_act_reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_opt_nums_act_reqs")
+        save_list_to_file(opt_avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_opt_avg_ofs")
+
+        simple_plot(range(self.NUM_GAMES), opt_avg_ofs, filename=self.FILE_NAME + '.png')
+
 
     def test(self, TEST_SIZE=100):
         try:
