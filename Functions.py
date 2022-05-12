@@ -1,6 +1,7 @@
 # from docplex.mp.model import Model
 import numpy as np
 import matplotlib.pyplot as plt
+import os.path
 
 rnd = np.random
 
@@ -156,13 +157,24 @@ def plot_learning_curve(x, scores, epsilons, filename=""):
     for i in range(n):
         running_avg[i] = np.mean(scores[max(0, i - 100):(i + 1)])
 
-    s_plt2.scatter(x, running_avg, color="C1")
+    s_plt2.plot(x, running_avg, color="C1")
     s_plt2.axes.get_xaxis().set_visible(False)
     s_plt2.yaxis.tick_right()
     s_plt2.set_ylabel('Score', color="C1")
     s_plt2.yaxis.set_label_position('right')
     s_plt2.tick_params(axis='y', colors="C1")
 
-    # plt.show()
+    plt.show()
     plt.savefig(filename)
 
+
+def save_list_to_file(list, dir, file_name, suffix):
+    full_name = dir + "_" + file_name + "_" + suffix + ".txt"
+    os.makedirs(os.path.dirname(full_name), exist_ok=True)
+    f = open(full_name, "w")
+    for i in range(len(list)):
+        if i < len(list) - 1:
+            f.write(str(list[i]) + "\n")
+        else:
+            f.write(str(list[i]))
+    f.close()

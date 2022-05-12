@@ -468,8 +468,8 @@ class Network:
 
         # req_id = np.where(req_obj.REQUESTS == action["req_id"])[0][0]
         r = action["req_id"]
-        v = result["g"]  # action["node_id"]
-        k = result["k"]
+        v = action["node_id"]
+        k = result["priority"]
         req_path = result["req_path"]
         rpl_path = result["rpl_path"]
 

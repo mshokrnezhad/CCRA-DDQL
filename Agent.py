@@ -6,7 +6,9 @@ rnd = np.random
 
 
 class Agent(object):
-    def __init__(self, EPSILON, NUM_ACTIONS, INPUT_SHAPE, NAME="", GAMMA=0.99, LR=0.0001, MEMORY_SIZE=2048, BATCH_SIZE=32, EPSILON_MIN=0.01, EPSILON_DEC=1e-3, REPLACE_COUNTER=1000, CHECKPOINT_DIR='models/'):
+    def __init__(self, NUM_ACTIONS, INPUT_SHAPE, EPSILON=1, NAME="", GAMMA=0.99, LR=0.0001,
+                 MEMORY_SIZE=2048, BATCH_SIZE=32, EPSILON_MIN=0.01, EPSILON_DEC=1e-3,
+                 REPLACE_COUNTER=1000, CHECKPOINT_DIR='models/'):
         self.GAMMA = GAMMA
         self.EPSILON = EPSILON
         self.LR = LR

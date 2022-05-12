@@ -68,21 +68,23 @@ scores = np.array(scores)
 x = [i+1 for i in range(len(scores))]
 plot_learning_curve(steps_array, scores/(10000*NUM_REQUESTS), eps_history, filename=figure_file)
 """
-
-import matplotlib.pyplot as plt
+from Environment import Environment
+from Functions import parse_state, plot_learning_curve
+from Agent import Agent
 import numpy as np
+import sys
+import random
 
+NUM_NODES = 12
+NUM_PRIORITY_LEVELS = 1
+NUM_REQUESTS = 10
+NUM_SERVICES = 1
+env_obj = Environment(NUM_NODES, NUM_PRIORITY_LEVELS, NUM_REQUESTS, NUM_SERVICES)
 
-# make the data
-np.random.seed(3)
-x = range(1,1000)
-y = [1/i for i in x]
-
-# plot
-fig, ax = plt.subplots()
-
-ax.scatter(x, y)
-plt.show()
+SEED = np.random.randint(1, 1000)
+env_obj.reset(SEED)
+opt_results = env_obj.heu_obj.solve()
+print(opt_results)
 
 
 

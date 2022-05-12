@@ -2,7 +2,6 @@ from Network import Network
 from Request import Request
 from Service import Service
 from Functions import specify_requests_entry_nodes, assign_requests_to_services
-from CPLEX import CPLEX
 from WFCCRA import WFCCRA
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
@@ -61,10 +60,9 @@ class Environment:
     def reset(self, SEED):
         # self.REQUESTS_ENTRY_NODES = specify_requests_entry_nodes(self.net_obj.FIRST_TIER_NODES, np.arange(self.NUM_REQUESTS), SEED)
         self.REQUESTS_ENTRY_NODES = np.zeros(self.NUM_REQUESTS).astype("int")
-        self.req_obj = Request(self.NUM_REQUESTS, self.net_obj.NODES, self.REQUESTS_ENTRY_NODES)
+        self.req_obj = Request(self.NUM_REQUESTS, self.net_obj.NODES, self.REQUESTS_ENTRY_NODES, SEED)
         self.net_obj = Network(self.NUM_NODES, self.NUM_PRIORITY_LEVELS)
         self.srv_obj = Service(self.NUM_SERVICES)
         self.REQUESTED_SERVICES = assign_requests_to_services(np.arange(self.NUM_SERVICES), np.arange(self.NUM_REQUESTS))
+        self.heu_obj = WFCCRA(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES, self.REQUESTS_ENTRY_NODES)
 
-        self.model_obj = CPLEX(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES,
-                               self.REQUESTS_ENTRY_NODES)
