@@ -141,47 +141,52 @@ def parse_state(state, NUM_NODES, NUM_REQUESTS, env_obj, switch="none"):
     print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n")
 
 
-def plot_learning_curve(x, scores, epsilons, filename=""):
+def plot_learning_curve(x, y, epsilons, filename=""):
     fig = plt.figure()
     s_plt1 = fig.add_subplot(111, label="1")  # "234" means "2x3 grid, 4th subplot".
     s_plt2 = fig.add_subplot(111, label="2", frame_on=False)
 
     s_plt1.plot(x, epsilons, color="C0")
-    s_plt1.set_xlabel("Training Steps", color="C0")
+    s_plt1.set_xlabel("Game Number", color="C0")
     s_plt1.set_ylabel("Epsilon", color="C0")
     s_plt1.tick_params(axis="x", color="C0")
     s_plt1.tick_params(axis="y", color="C0")
 
-    n = len(scores)
-    running_avg = np.empty(n)
+    n = len(y)
+    y_avg = np.empty(n)
     for i in range(n):
-        running_avg[i] = np.mean(scores[max(0, i - 100):(i + 1)])
+        y_avg[i] = np.mean(y[max(0, i - 100):(i + 1)])
 
-    s_plt2.plot(x, running_avg, color="C1")
+    s_plt2.plot(x, y_avg, color="C1")
     s_plt2.axes.get_xaxis().set_visible(False)
     s_plt2.yaxis.tick_right()
-    s_plt2.set_ylabel('Score', color="C1")
+    s_plt2.set_ylabel('Cost', color="C1")
     s_plt2.yaxis.set_label_position('right')
     s_plt2.tick_params(axis='y', colors="C1")
 
     plt.show()
     plt.savefig(filename)
 
-def simple_plot(x, y, filename=""):
+
+def simple_plot(x, y, z, filename=""):
     fig = plt.figure()
     plt1 = fig.add_subplot(111, label="2")
 
     y_avg = np.empty(len(y))
+    z_avg = np.empty(len(z))
     for i in range(len(y)):
-        y_avg[i] = np.mean(y[max(0, i - 100):(i + 1)])
+        y_avg[i] = np.mean(y[max(0, i - 200):(i + 1)])
+    for i in range(len(z)):
+        z_avg[i] = np.mean(z[max(0, i - 200):(i + 1)])
 
-    plt1.plot(x, y_avg, color="C1")
+    plt1.plot(x[100:], y_avg[100:], color="C1")
+    plt1.plot(x[100:], z_avg[100:], color="C1")
     plt1.set_xlabel("Game Number", color="C1")
     plt1.set_ylabel("OF", color="C1")
     plt1.tick_params(axis="x", color="C1")
     plt1.tick_params(axis="y", color="C1")
 
-    plt.show()
+    # plt.show()
     plt.savefig(filename)
 
 
@@ -210,5 +215,5 @@ def read_list_from_file(dir, file_name, type, round_num=2):
 def generate_seeds(num_seeds):
     seeds = []
     for i in range(num_seeds):
-        seeds.append(np.random.randint(1, 1000))
+        seeds.append(np.random.randint(1, 100000))
     save_list_to_file(seeds, "inputs/", "SEEDS")

@@ -10,20 +10,20 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 
 
 class Environment:
-    def __init__(self, NUM_NODES, NUM_PRIORITY_LEVELS, NUM_REQUESTS, NUM_SERVICES):
+    def __init__(self, NUM_NODES, NUM_REQUESTS, NUM_SERVICES, NUM_PRIORITY_LEVELS):
         self.NUM_NODES = NUM_NODES
         self.NUM_REQUESTS = NUM_REQUESTS
         self.NUM_SERVICES = NUM_SERVICES
         self.NUM_PRIORITY_LEVELS = NUM_PRIORITY_LEVELS
         # self.SWITCH = SWITCH
-        self.net_obj = Network(NUM_NODES, NUM_PRIORITY_LEVELS)
+        self.net_obj = Network(NUM_NODES=NUM_NODES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS)
         # self.REQUESTS_ENTRY_NODES = specify_requests_entry_nodes(self.net_obj.FIRST_TIER_NODES, np.arange(NUM_REQUESTS))
         self.REQUESTS_ENTRY_NODES = np.zeros(self.NUM_REQUESTS).astype("int")
-        self.req_obj = Request(NUM_REQUESTS, self.net_obj.NODES, self.REQUESTS_ENTRY_NODES)
-        self.srv_obj = Service(NUM_SERVICES)
+        self.req_obj = Request(NUM_REQUESTS=NUM_REQUESTS, NODES=self.net_obj.NODES, REQUESTS_ENTRY_NODES=self.REQUESTS_ENTRY_NODES)
+        self.srv_obj = Service(NUM_SERVICES=NUM_SERVICES)
         self.REQUESTED_SERVICES = assign_requests_to_services(np.arange(NUM_SERVICES), np.arange(NUM_REQUESTS))
         # self.model_obj = CPLEX(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES, self.REQUESTS_ENTRY_NODES)
-        self.heu_obj = WFCCRA(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES, self.REQUESTS_ENTRY_NODES)
+        self.heu_obj = WFCCRA(net_obj=self.net_obj, req_obj=self.req_obj, srv_obj=self.srv_obj, REQUESTED_SERVICES=self.REQUESTED_SERVICES, REQUESTS_ENTRY_NODES=self.REQUESTS_ENTRY_NODES)
 
     def get_state(self, entry_node=0, switch="none"):
         net_state = self.net_obj.get_state(entry_node, switch)
@@ -46,7 +46,7 @@ class Environment:
         if result["done"]:
             reward = 0
         else:
-            reward = self.net_obj.find_max_action_cost() - result["OF"]
+            reward = self.net_obj.find_max_action_cost(self.req_obj.CAPACITY_REQUIREMENTS[action['req_id']], self.req_obj.BW_REQUIREMENTS[action['req_id']]) - result["OF"]
             self.update_state(action, result)
 
         resulted_state = self.get_state(result["pair"][0], switch)
@@ -60,9 +60,8 @@ class Environment:
     def reset(self, SEED):
         # self.REQUESTS_ENTRY_NODES = specify_requests_entry_nodes(self.net_obj.FIRST_TIER_NODES, np.arange(self.NUM_REQUESTS), SEED)
         self.REQUESTS_ENTRY_NODES = np.zeros(self.NUM_REQUESTS).astype("int")
-        self.req_obj = Request(self.NUM_REQUESTS, self.net_obj.NODES, self.REQUESTS_ENTRY_NODES, SEED)
-        self.net_obj = Network(self.NUM_NODES, self.NUM_PRIORITY_LEVELS)
-        self.srv_obj = Service(self.NUM_SERVICES)
+        self.req_obj = Request(NUM_REQUESTS=self.NUM_REQUESTS, NODES=self.net_obj.NODES, REQUESTS_ENTRY_NODES=self.REQUESTS_ENTRY_NODES, SEED=SEED)
+        self.net_obj = Network(NUM_NODES=self.NUM_NODES, NUM_PRIORITY_LEVELS=self.NUM_PRIORITY_LEVELS)
+        self.srv_obj = Service(NUM_SERVICES=self.NUM_SERVICES)
         self.REQUESTED_SERVICES = assign_requests_to_services(np.arange(self.NUM_SERVICES), np.arange(self.NUM_REQUESTS))
-        self.heu_obj = WFCCRA(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES, self.REQUESTS_ENTRY_NODES)
-
+        self.heu_obj = WFCCRA(net_obj=self.net_obj, req_obj=self.req_obj, srv_obj=self.srv_obj, REQUESTED_SERVICES=self.REQUESTED_SERVICES, REQUESTS_ENTRY_NODES=self.REQUESTS_ENTRY_NODES)

@@ -8,7 +8,7 @@ rnd = np.random
 class Network:
     def __init__(
             self, NUM_NODES, NUM_PRIORITY_LEVELS=1, SEED=4, NUM_TIERS=3, TIER_HEIGHT=100,
-            TIER_WIDTH=20, DC_CAPACITY_UNIT=100, DC_COST_UNIT=50, LINK_BW_LB=250, LINK_BW_UB=300,
+            TIER_WIDTH=20, DC_CAPACITY_UNIT=100, DC_COST_RATIO=10, DC_COST_BASE=1000, LINK_BW_LB=250, LINK_BW_UB=300,
             LINK_COST_LB=10, LINK_COST_UB=20, BURST_SIZE_LIMIT=100, PACKET_SIZE=10, NUM_PATHS_UB=2, LINK_LENGTH_UB=5
     ):
 
@@ -18,7 +18,8 @@ class Network:
         self.TIER_HEIGHT = TIER_HEIGHT
         self.TIER_WIDTH = TIER_WIDTH
         self.DC_CAPACITY_UNIT = DC_CAPACITY_UNIT
-        self.DC_COST_UNIT = DC_COST_UNIT
+        self.DC_COST_RATIO = DC_COST_RATIO
+        self.DC_COST_BASE = DC_COST_BASE
         self.LINK_BW_LB = LINK_BW_LB
         self.LINK_BW_UB = LINK_BW_UB
         self.LINK_COST_LB = LINK_COST_LB
@@ -85,7 +86,8 @@ class Network:
 
     def initialize_dc_costs(self):
 
-        dc_costs = np.array([rnd.randint((self.NUM_TIERS - self.get_tier_num(i) - 1) * self.DC_COST_UNIT, (self.NUM_TIERS - self.get_tier_num(i)) * self.DC_COST_UNIT) for i in self.NODES])
+        dc_cost_unit = np.array([(self.DC_COST_RATIO ** (self.NUM_TIERS - self.get_tier_num(i) - 1)) * self.DC_COST_BASE for i in self.NODES])
+        dc_costs = np.array([rnd.randint(dc_cost_unit[i] - 5, dc_cost_unit[i] + 5) for i in self.NODES])
 
         return dc_costs
 
@@ -341,7 +343,7 @@ class Network:
 
         # print(self.DC_COSTS)
         # norm = np.linalg.norm(self.DC_COSTS)
-        norm = self.NUM_TIERS * self.DC_COST_UNIT
+        norm = (self.DC_COST_RATIO ** self.NUM_TIERS) + self.DC_COST_BASE
         # print(norm)
         normal_dc_costs = np.round((self.DC_COSTS / norm), 3)
         # print(normal_dc_costs)
@@ -429,7 +431,7 @@ class Network:
 
         return state
 
-    def find_max_action_cost(self):
+    def find_max_action_cost(self, CAPACITY_REQUIREMENTS, BW_REQUIREMENTS):
         c1 = 0
         for p in self.PATHS:
             c2 = 0

@@ -68,6 +68,8 @@ scores = np.array(scores)
 x = [i+1 for i in range(len(scores))]
 plot_learning_curve(steps_array, scores/(10000*NUM_REQUESTS), eps_history, filename=figure_file)
 """
+
+"""
 from Environment import Environment
 from Functions import parse_state, plot_learning_curve
 from Agent import Agent
@@ -85,6 +87,5 @@ SEED = np.random.randint(1, 1000)
 env_obj.reset(SEED)
 opt_results = env_obj.heu_obj.solve()
 print(opt_results)
-
-
+"""
 

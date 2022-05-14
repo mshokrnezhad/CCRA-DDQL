@@ -65,13 +65,13 @@ class WFCCRA:
                                     d += self.net_obj.LINK_DELAYS[l2][k]
                                 d += self.net_obj.PACKET_SIZE / (self.net_obj.DC_CAPACITIES[v] + self.EPSILON)
                                 if d <= self.req_obj.DELAY_REQUIREMENTS[r]:
-                                    c += self.net_obj.DC_COSTS[v]
+                                    c += self.net_obj.DC_COSTS[v]  # * self.req_obj.CAPACITY_REQUIREMENTS[r]
                                     for l1 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
-                                        c += self.net_obj.LINK_COSTS[l1]
-                                        req_paths_cost += self.net_obj.LINK_COSTS[l1]
+                                        c += self.net_obj.LINK_COSTS[l1]  # * self.req_obj.BW_REQUIREMENTS[r]
+                                        req_paths_cost += self.net_obj.LINK_COSTS[l1]  # * self.req_obj.BW_REQUIREMENTS[r]
                                     for l2 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
-                                        c += self.net_obj.LINK_COSTS[l2]
-                                        rpl_paths_cost += self.net_obj.LINK_COSTS[l1]
+                                        c += self.net_obj.LINK_COSTS[l2]  # * self.req_obj.BW_REQUIREMENTS[r]
+                                        rpl_paths_cost += self.net_obj.LINK_COSTS[l1]  # * self.req_obj.BW_REQUIREMENTS[r]
                                     resources_per_req.append([v, k, p1, p2])
                                     costs_per_req.append(c)
                                     cost_details_per_req.append([req_paths_cost, rpl_paths_cost])
@@ -165,24 +165,24 @@ class WFCCRA:
                                         rpl_path[r][p2][k] = 1
                                         d = 0
                                         c = 0
-                                        req_paths_cost = 0
-                                        rpl_paths_cost = 0
+                                        # req_paths_cost = 0
+                                        # rpl_paths_cost = 0
                                         for l1 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
                                             d += self.net_obj.LINK_DELAYS[l1][k]
                                         for l2 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
                                             d += self.net_obj.LINK_DELAYS[l2][k]
                                         d += self.net_obj.PACKET_SIZE / (self.net_obj.DC_CAPACITIES[v] + self.EPSILON)
                                         if d <= self.req_obj.DELAY_REQUIREMENTS[r]:
-                                            c += self.net_obj.DC_COSTS[v]
+                                            c += self.net_obj.DC_COSTS[v]  # * self.req_obj.CAPACITY_REQUIREMENTS[r]
                                             for l1 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
-                                                c += self.net_obj.LINK_COSTS[l1]
-                                                req_paths_cost += self.net_obj.LINK_COSTS[l1]
+                                                c += self.net_obj.LINK_COSTS[l1]  # * self.req_obj.BW_REQUIREMENTS[r]
+                                                # req_paths_cost += self.net_obj.LINK_COSTS[l1]
                                             for l2 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
-                                                c += self.net_obj.LINK_COSTS[l2]
-                                                rpl_paths_cost += self.net_obj.LINK_COSTS[l1]
+                                                c += self.net_obj.LINK_COSTS[l2]  # * self.req_obj.BW_REQUIREMENTS[r]
+                                                # rpl_paths_cost += self.net_obj.LINK_COSTS[l1]
                                             resources_per_req.append([v, k, p1, p2])
                                             costs_per_req.append(c)
-                                            cost_details_per_req.append([req_paths_cost, rpl_paths_cost])
+                                            # cost_details_per_req.append([req_paths_cost, rpl_paths_cost])
             if len(costs_per_req) > 0:
                 min_index = np.array(costs_per_req).argmin()
                 resources[r] = resources_per_req[min_index]
@@ -195,7 +195,7 @@ class WFCCRA:
                 for l2 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, resources[r][3]] == 1)[0]:
                     LINK_BWS[l2] = LINK_BWS[l2] - self.req_obj.BW_REQUIREMENTS[r]
                     LINK_BURSTS[l2, resources[r][1]] = LINK_BURSTS[l2, resources[r][1]] - self.req_obj.BURST_SIZES[r]
-                cost_details[r] = cost_details_per_req[min_index]
+                # cost_details[r] = cost_details_per_req[min_index]
             else:
                 resources[r] = [-1, -1, -1, -1]
                 costs[r] = -1

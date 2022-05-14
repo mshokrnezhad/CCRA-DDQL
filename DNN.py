@@ -8,7 +8,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 class DNN(nn.Module):
-    def __init__(self, LR, NUM_ACTIONS, INPUT_SHAPE, NAME, CHECKPOINT_DIR, H1=256, H2=256, H3=256, H4=256):
+    def __init__(self, LR, NUM_ACTIONS, INPUT_SHAPE, NAME, CHECKPOINT_DIR, H1=256, H2=128, H3=64, H4=32):
         super().__init__()
         self.CHECKPOINT_DIR = CHECKPOINT_DIR
         self.CHECKPOINT_FILE = os.path.join(self.CHECKPOINT_DIR, NAME)

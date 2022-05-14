@@ -4,10 +4,9 @@ from DNN import DNN
 from Memory import Memory
 rnd = np.random
 
-
 class Agent(object):
     def __init__(self, NUM_ACTIONS, INPUT_SHAPE, NAME="", EPSILON=1, GAMMA=0.99, LR=0.0001,
-                 MEMORY_SIZE=2048, BATCH_SIZE=32, EPSILON_MIN=0.01, EPSILON_DEC=1e-3,
+                 MEMORY_SIZE=50000, BATCH_SIZE=32, EPSILON_MIN=0.01, EPSILON_DEC=1e-5,
                  REPLACE_COUNTER=1000, CHECKPOINT_DIR='models/'):
         self.GAMMA = GAMMA
         self.EPSILON = EPSILON
@@ -21,9 +20,9 @@ class Agent(object):
         self.CHECKPOINT_DIR = CHECKPOINT_DIR
         self.ACTION_SPACE = [i for i in range(self.NUM_ACTIONS)]
         self.learning_counter = 0
-        self.memory = Memory(MEMORY_SIZE, INPUT_SHAPE, NUM_ACTIONS)
-        self.q_eval = DNN(LR, NUM_ACTIONS, INPUT_SHAPE, NAME+"_q_eval", self.CHECKPOINT_DIR)
-        self.q_next = DNN(LR, NUM_ACTIONS, INPUT_SHAPE, NAME+"_q_next", self.CHECKPOINT_DIR)
+        self.memory = Memory(MAX_SIZE=MEMORY_SIZE, INPUT_SHAPE=INPUT_SHAPE, NUM_ACTIONS=NUM_ACTIONS)
+        self.q_eval = DNN(LR=LR, NUM_ACTIONS=NUM_ACTIONS, INPUT_SHAPE=INPUT_SHAPE, NAME=NAME+"_q_eval", CHECKPOINT_DIR=self.CHECKPOINT_DIR)
+        self.q_next = DNN(LR=LR, NUM_ACTIONS=NUM_ACTIONS, INPUT_SHAPE=INPUT_SHAPE, NAME=NAME+"_q_next", CHECKPOINT_DIR=self.CHECKPOINT_DIR)
 
     def store_transition(self, state, action, reward, resulted_state, done):
         self.memory.store_transition(state, action, reward, resulted_state, done)
