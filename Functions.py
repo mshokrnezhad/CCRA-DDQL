@@ -175,9 +175,9 @@ def simple_plot(x, y, z, filename=""):
     y_avg = np.empty(len(y))
     z_avg = np.empty(len(z))
     for i in range(len(y)):
-        y_avg[i] = np.mean(y[max(0, i - 200):(i + 1)])
+        y_avg[i] = np.mean(y[max(0, i - 50):(i + 1)])
     for i in range(len(z)):
-        z_avg[i] = np.mean(z[max(0, i - 200):(i + 1)])
+        z_avg[i] = np.mean(z[max(0, i - 50):(i + 1)])
 
     plt1.plot(x[100:], y_avg[100:], color="C1")
     plt1.plot(x[100:], z_avg[100:], color="C1")

@@ -9,8 +9,8 @@ class Network:
     def __init__(
             self, NUM_NODES, NUM_PRIORITY_LEVELS=1, SEED=4, NUM_TIERS=3, TIER_HEIGHT=100,
             TIER_WIDTH=20, DC_CAPACITY_UNIT=100, DC_COST_RATIO=10, DC_COST_BASE=1000, LINK_BW_LB=250, LINK_BW_UB=300,
-            LINK_COST_LB=10, LINK_COST_UB=20, BURST_SIZE_LIMIT=100, PACKET_SIZE=10, NUM_PATHS_UB=2, LINK_LENGTH_UB=5
-    ):
+            LINK_COST_LB=10, LINK_COST_UB=20, BURST_SIZE_LIMIT=200, PACKET_SIZE=1, NUM_PATHS_UB=2, LINK_LENGTH_UB=5
+    ): # BURST_SIZE_LIMIT=100, PACKET_SIZE=10
 
         rnd.seed(SEED)
         self.NUM_NODES = NUM_NODES
@@ -333,9 +333,11 @@ class Network:
 
     def get_state(self, entry_node=0, switch="none"):
 
+        norm = 1
+
         # print(self.DC_CAPACITIES)
         # norm = np.linalg.norm(self.DC_CAPACITIES)
-        norm = self.NUM_TIERS * self.DC_CAPACITY_UNIT
+        # norm = self.NUM_TIERS * self.DC_CAPACITY_UNIT
         # print(norm)
         normal_dc_capacities = np.round((self.DC_CAPACITIES / norm), 3)
         # print(normal_dc_capacities)
@@ -343,7 +345,7 @@ class Network:
 
         # print(self.DC_COSTS)
         # norm = np.linalg.norm(self.DC_COSTS)
-        norm = (self.DC_COST_RATIO ** self.NUM_TIERS) + self.DC_COST_BASE
+        # norm = (self.DC_COST_RATIO ** self.NUM_TIERS) + self.DC_COST_BASE
         # print(norm)
         normal_dc_costs = np.round((self.DC_COSTS / norm), 3)
         # print(normal_dc_costs)
@@ -373,7 +375,7 @@ class Network:
         # print(path_bws_per_head_per_tail)
         # print(path_bws_per_head_per_tail.reshape(1, -1)[0])
         # norm = np.linalg.norm(path_bws_per_head_per_tail.reshape(1, -1)[0])
-        norm = self.LINK_BW_UB
+        # norm = self.LINK_BW_UB
         # print(norm)
         normal_path_bws_per_head_per_tail = np.round((path_bws_per_head_per_tail.reshape(1, -1)[0] / norm), 3)
         # print(normal_path_bws_per_head_per_tail)
@@ -393,7 +395,7 @@ class Network:
         # print(path_costs_per_head_per_tail)
         # print(path_costs_per_head_per_tail.reshape(1, -1)[0])
         # norm = np.linalg.norm(path_costs_per_head_per_tail.reshape(1, -1)[0])
-        norm = self.find_max_path_cost()
+        # norm = self.find_max_path_cost()
         # print(norm)
         normal_path_costs_per_head_per_tail = np.round((path_costs_per_head_per_tail.reshape(1, -1)[0] / norm), 3)
         # print(normal_path_costs_per_head_per_tail)
@@ -419,7 +421,7 @@ class Network:
         # print(path_delays_per_head_per_tail)
         # print(path_delays_per_head_per_tail.reshape(1, -1)[0])
         # norm = np.linalg.norm(path_delays_per_head_per_tail.reshape(1, -1)[0])
-        norm = self.find_max_path_delay()
+        # norm = self.find_max_path_delay()
         # print(norm)
         normal_path_delays_per_head_per_tail = np.round((path_delays_per_head_per_tail.reshape(1, -1)[0] / norm), 3)
         # print(normal_path_delays_per_head_per_tail)

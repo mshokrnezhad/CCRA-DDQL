@@ -46,7 +46,9 @@ class VNF_Placement(object):
                 self.agent.learn()
                 state = resulted_state
                 num_steps += 1
-                print(a["node_id"], req_reward)
+                # print(a["node_id"], req_reward)
+                if done:
+                    break
             rewards.append(game_reward)
             steps.append(num_steps)
             ml_nums_act_reqs.append(ml_game_num_act_reqs)
@@ -57,7 +59,7 @@ class VNF_Placement(object):
             if avg_reward > best_reward:
                 self.agent.save_models()
                 best_reward = avg_reward
-            print('episode:', i, 'cost: %.3f, best_reward: %.0f, eps: %.4f' % (ml_avg_game_of, best_reward, self.agent.EPSILON), 'steps:', num_steps)
+            print('episode:', i, 'cost: %.3f, num_act_reqs: %.0f, reward: %.0f, eps: %.4f' % (ml_avg_game_of, ml_game_num_act_reqs, game_reward, self.agent.EPSILON), 'steps:', num_steps)
 
         save_list_to_file(ml_nums_act_reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_nums_act_reqs")
         save_list_to_file(ml_avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_avg_ofs")
@@ -116,6 +118,7 @@ class VNF_Placement(object):
             SEED = self.SEEDS[i]
             self.env_obj.reset(SEED)
             opt_results = self.env_obj.heu_obj.solve()
+            # print(opt_results["pairs"])
             opt_game_num_act_reqs = opt_results["num_act_reqs"]
             opt_nums_act_reqs.append(opt_game_num_act_reqs)
             opt_avg_game_of = opt_results["avg_of"]
