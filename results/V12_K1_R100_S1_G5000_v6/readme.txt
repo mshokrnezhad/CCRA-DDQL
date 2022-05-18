@@ -15,3 +15,5 @@ EPSILON_DEC=5e-6
 
 BURST_SIZE_LIMIT=200,
 PACKET_SIZE=1
+
+seeds.append(np.random.randint(1, 100000))

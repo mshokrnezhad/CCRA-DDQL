@@ -3,6 +3,7 @@ from Request import Request
 from Service import Service
 from Functions import specify_requests_entry_nodes, assign_requests_to_services
 from WFCCRA import WFCCRA
+from RCCRA import RCCRA
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
@@ -24,6 +25,7 @@ class Environment:
         self.REQUESTED_SERVICES = assign_requests_to_services(np.arange(NUM_SERVICES), np.arange(NUM_REQUESTS))
         # self.model_obj = CPLEX(self.net_obj, self.req_obj, self.srv_obj, self.REQUESTED_SERVICES, self.REQUESTS_ENTRY_NODES)
         self.heu_obj = WFCCRA(net_obj=self.net_obj, req_obj=self.req_obj, srv_obj=self.srv_obj, REQUESTED_SERVICES=self.REQUESTED_SERVICES, REQUESTS_ENTRY_NODES=self.REQUESTS_ENTRY_NODES)
+        # self.random_obj = RCCRA(net_obj=self.net_obj, req_obj=self.req_obj, srv_obj=self.srv_obj, REQUESTED_SERVICES=self.REQUESTED_SERVICES, REQUESTS_ENTRY_NODES=self.REQUESTS_ENTRY_NODES)
 
     def get_state(self, entry_node=0, switch="none"):
         net_state = self.net_obj.get_state(entry_node, switch)
@@ -65,3 +67,5 @@ class Environment:
         self.srv_obj = Service(NUM_SERVICES=self.NUM_SERVICES)
         self.REQUESTED_SERVICES = assign_requests_to_services(np.arange(self.NUM_SERVICES), np.arange(self.NUM_REQUESTS))
         self.heu_obj = WFCCRA(net_obj=self.net_obj, req_obj=self.req_obj, srv_obj=self.srv_obj, REQUESTED_SERVICES=self.REQUESTED_SERVICES, REQUESTS_ENTRY_NODES=self.REQUESTS_ENTRY_NODES)
+        # self.random_obj = RCCRA(net_obj=self.net_obj, req_obj=self.req_obj, srv_obj=self.srv_obj, REQUESTED_SERVICES=self.REQUESTED_SERVICES, REQUESTS_ENTRY_NODES=self.REQUESTS_ENTRY_NODES)
+

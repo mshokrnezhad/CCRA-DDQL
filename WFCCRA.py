@@ -1,4 +1,3 @@
-# v1 for GlobeCom2022
 import numpy as np
 
 

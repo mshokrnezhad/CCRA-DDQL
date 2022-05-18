@@ -168,25 +168,41 @@ def plot_learning_curve(x, y, epsilons, filename=""):
     plt.savefig(filename)
 
 
-def simple_plot(x, y, z, filename=""):
+def simple_plot(x, y, filename="", avg_win=100):
     fig = plt.figure()
     plt1 = fig.add_subplot(111, label="2")
 
     y_avg = np.empty(len(y))
-    z_avg = np.empty(len(z))
     for i in range(len(y)):
-        y_avg[i] = np.mean(y[max(0, i - 50):(i + 1)])
-    for i in range(len(z)):
-        z_avg[i] = np.mean(z[max(0, i - 50):(i + 1)])
+        y_avg[i] = np.mean(y[max(0, i - avg_win):(i + 1)])
 
-    plt1.plot(x[100:], y_avg[100:], color="C1")
-    plt1.plot(x[100:], z_avg[100:], color="C1")
+    plt1.plot(x[avg_win:], y_avg[avg_win:], color="C1")
     plt1.set_xlabel("Game Number", color="C1")
-    plt1.set_ylabel("OF", color="C1")
+    plt1.set_ylabel("???", color="C1")
     plt1.tick_params(axis="x", color="C1")
     plt1.tick_params(axis="y", color="C1")
 
     # plt.show()
+    plt.savefig(filename)
+
+
+def multi_plot(x, Y, filename="", avg_win=100, axis_label="", C=[], L=[], lloc=""):
+    fig = plt.figure()
+    plt1 = fig.add_subplot(111, label="2")
+
+    for y_index in range(len(Y)):
+        y_avg = np.empty(len(Y[y_index]))
+        for i in range(len(Y[y_index])):
+            y_avg[i] = np.mean(Y[y_index][max(0, i - avg_win):(i + 1)])
+        plt1.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+
+    plt1.set_xlabel("Game Number")
+    plt1.set_ylabel(axis_label)
+    plt1.tick_params(axis="x")
+    plt1.tick_params(axis="y")
+
+    # plt.show()
+    plt.legend(loc=lloc)
     plt.savefig(filename)
 
 
@@ -215,5 +231,5 @@ def read_list_from_file(dir, file_name, type, round_num=2):
 def generate_seeds(num_seeds):
     seeds = []
     for i in range(num_seeds):
-        seeds.append(np.random.randint(1, 100000))
-    save_list_to_file(seeds, "inputs/", "SEEDS")
+        seeds.append(np.random.randint(1, 100))
+    save_list_to_file(seeds, "inputs/", "SEEDS_100")

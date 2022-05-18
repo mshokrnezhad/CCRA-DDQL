@@ -2,3 +2,5 @@ dc_cost_unit = np.array([(self.DC_COST_RATIO ** (self.NUM_TIERS - self.get_tier_
 dc_costs = np.array([rnd.randint(dc_cost_unit[i] - 5, dc_cost_unit[i] + 5) for i in self.NODES])
 
 AGENT_EPSILON_MIN = 0.1
+
+seeds.append(np.random.randint(1, 100000))
