@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os.path
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
 
 rnd = np.random
 
@@ -186,23 +187,68 @@ def simple_plot(x, y, filename="", avg_win=100):
     plt.savefig(filename)
 
 
-def multi_plot(x, Y, filename="", avg_win=100, axis_label="", C=[], L=[], lloc=""):
+""" 
+def simple_plot(x, y, filename="", avg_win=100):
     fig = plt.figure()
     plt1 = fig.add_subplot(111, label="2")
+
+    y_avg = np.empty(len(y))
+    for i in range(len(y)):
+        y_avg[i] = np.mean(y[max(0, i - avg_win):(i + 1)])
+
+    plt1.plot(x[avg_win:], y_avg[avg_win:], color="C1")
+    plt1.set_xlabel("Game Number", color="C1")
+    plt1.set_ylabel("???", color="C1")
+    plt1.tick_params(axis="x", color="C1")
+    plt1.tick_params(axis="y", color="C1")
+
+    # plt.show()
+    plt.savefig(filename)
+"""
+
+
+def multi_plot(x, Y, filename="", avg_win=100, axis_label="", C=[], L=[], lloc="", IsYScaleLog=False):
+    fig = plt.figure(figsize=(8, 5))
+    ax = plt.subplot(111)  # whole path
 
     for y_index in range(len(Y)):
         y_avg = np.empty(len(Y[y_index]))
         for i in range(len(Y[y_index])):
             y_avg[i] = np.mean(Y[y_index][max(0, i - avg_win):(i + 1)])
-        plt1.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+        ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
 
-    plt1.set_xlabel("Game Number")
-    plt1.set_ylabel(axis_label)
-    plt1.tick_params(axis="x")
-    plt1.tick_params(axis="y")
+    ax.set_xlabel("Game Number")
+    ax.set_ylabel(axis_label)
+    ax.tick_params(axis="x")
+    ax.tick_params(axis="y")
+    plt.legend(bbox_to_anchor=lloc)  # loc="best"
+
+
+    axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
+
+    for y_index in range(len(Y)):
+        y_avg = np.empty(len(Y[y_index]))
+        for i in range(len(Y[y_index])):
+            y_avg[i] = np.mean(Y[y_index][max(0, i - avg_win):(i + 1)])
+        axins.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+
+    x1, x2, y1, y2 = 4996, 5000, 1060, 1068
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+    axins.set_xticks([4996, 4998, 5000])
+    axins.set_xticklabels([4996, 4998, 5000])
+    axins.set_yticks([1060, 1062, 1064, 1066, 1068])
+
+    pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
+    # pp.set_fill(True)
+    pp.set_facecolor("lightgray")
+    pp.set_edgecolor("k")
+
+
+    if IsYScaleLog:
+        ax.set_yscale('log')
 
     # plt.show()
-    plt.legend(loc=lloc)
     plt.savefig(filename)
 
 

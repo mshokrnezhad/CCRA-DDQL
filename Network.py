@@ -31,6 +31,7 @@ class Network:
         self.LINK_LENGTH_UB = LINK_LENGTH_UB
         self.PRIORITIES = np.linspace(0, NUM_PRIORITY_LEVELS, NUM_PRIORITY_LEVELS + 1).astype(int)
         self.NODES = np.arange(NUM_NODES)
+        self.EPSILON = 0.001
         self.X_LOCS, self.Y_LOCS = self.initialize_coordinates()
         self.DISTANCES = self.initialize_distances()
         self.DC_CAPACITIES = self.initialize_dc_capacities()
@@ -433,6 +434,24 @@ class Network:
 
         return state
 
+    def update_state(self, action, result, req_obj):
+
+        # req_id = np.where(req_obj.REQUESTS == action["req_id"])[0][0]
+        r = action["req_id"]
+        v = action["node_id"]
+        k = result["priority"]
+        req_path = result["req_path"]
+        rpl_path = result["rpl_path"]
+
+        self.DC_CAPACITIES[v] -= req_obj.CAPACITY_REQUIREMENTS[r]
+        if result["pair"][0] != result["pair"][1]:
+            for l in np.where(self.LINKS_PATHS_MATRIX[:, req_path] == 1)[0]:
+                self.LINK_BWS[l] -= req_obj.BW_REQUIREMENTS[r]
+                self.LINK_BURSTS[l, k] -= req_obj.BURST_SIZES[r]
+            for l in np.where(self.LINKS_PATHS_MATRIX[:, rpl_path] == 1)[0]:
+                self.LINK_BWS[l] -= req_obj.BW_REQUIREMENTS[r]
+                self.LINK_BURSTS[l, k] -= req_obj.BURST_SIZES[r]
+
     def find_max_action_cost(self, CAPACITY_REQUIREMENTS, BW_REQUIREMENTS):
         c1 = 0
         for p in self.PATHS:
@@ -468,19 +487,46 @@ class Network:
 
         return d1
 
-    def update_state(self, action, result, req_obj):
+    def find_argmin_e2e_delay_per_node_pair(self, ENTRY_NODE, v, CAPACITY_REQUIREMENT):
+        delays = []
+        for k in self.PRIORITIES:
+            for p1 in np.intersect1d(self.PATHS_PER_HEAD[ENTRY_NODE], self.PATHS_PER_TAIL[v]):
+                for p2 in np.intersect1d(self.PATHS_PER_HEAD[v], self.PATHS_PER_TAIL[ENTRY_NODE]):
+                    d = 0
+                    if len(np.where(self.LINKS_PATHS_MATRIX[:, p1] == 1)[0]) > 0 and len(np.where(self.LINKS_PATHS_MATRIX[:, p2] == 1)[0]) > 0:
+                        for l1 in np.where(self.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
+                            d += self.LINK_DELAYS[l1][k]
+                        for l2 in np.where(self.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
+                            d += self.LINK_DELAYS[l2][k]
+                        d += self.PACKET_SIZE / CAPACITY_REQUIREMENT
+                        delays.append(d)
+                    else:
+                        d = -1
 
-        # req_id = np.where(req_obj.REQUESTS == action["req_id"])[0][0]
-        r = action["req_id"]
-        v = action["node_id"]
-        k = result["priority"]
-        req_path = result["req_path"]
-        rpl_path = result["rpl_path"]
+        if len(delays) > 0:
+            return np.min(delays)
+        return -1
 
-        self.DC_CAPACITIES[v] -= req_obj.CAPACITY_REQUIREMENTS[r]
-        for l in np.where(self.LINKS_PATHS_MATRIX[:, req_path] == 1)[0]:
-            self.LINK_BWS[l] -= req_obj.BW_REQUIREMENTS[r]
-            self.LINK_BURSTS[l, k] -= req_obj.BURST_SIZES[r]
-        for l in np.where(self.LINKS_PATHS_MATRIX[:, rpl_path] == 1)[0]:
-            self.LINK_BWS[l] -= req_obj.BW_REQUIREMENTS[r]
-            self.LINK_BURSTS[l, k] -= req_obj.BURST_SIZES[r]
+        """
+        if e == v:
+            return self.PACKET_SIZE / (self.DC_CAPACITIES[v])
+        else:
+            delays = []
+            for k in self.PRIORITIES:
+                for p1 in np.intersect1d(self.PATHS_PER_HEAD[e], self.PATHS_PER_TAIL[v]):
+                    for p2 in np.intersect1d(self.PATHS_PER_HEAD[v], self.PATHS_PER_TAIL[e]):
+                        d = 0
+                        if len(np.where(self.LINKS_PATHS_MATRIX[:, p1] == 1)[0]) > 0 and len(np.where(self.LINKS_PATHS_MATRIX[:, p2] == 1)[0]) > 0 :
+                            for l1 in np.where(self.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
+                                d += self.LINK_DELAYS[l1][k]
+                            for l2 in np.where(self.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
+                                d += self.LINK_DELAYS[l2][k]
+                            d += self.PACKET_SIZE / (self.DC_CAPACITIES[v])
+                            delays.append(d)
+                        else:
+                            d = -1
+
+            if len(delays) > 0:
+                return np.min(delays)
+            return -1
+        """

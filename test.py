@@ -89,3 +89,31 @@ opt_results = env_obj.heu_obj.solve()
 print(opt_results)
 """
 
+import numpy as np; np.random.seed(43)
+import matplotlib.pyplot as plt
+
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes,mark_inset
+
+#  random  walk
+random_walk = np.cumsum(np.random.randn(5000))/2-50
+
+fig = plt.figure(figsize = (13,8))
+ax = plt.subplot(111) #whole path
+ax.plot(random_walk)
+ax.set_xlim(0,5000)
+ax.set_ylim(-130,55)
+
+axins = zoomed_inset_axes(ax,2,loc='lower right',
+                          axes_kwargs={"facecolor" : "lightgray"})
+
+axins.plot(random_walk)
+
+x1,x2,y1,y2 = 1000,2000, 1600,1700
+axins.set_xlim(x1,x2)
+axins.set_ylim(y1,y2)
+
+pp,p1,p2 = mark_inset(ax,axins,loc1=1,loc2=3)
+pp.set_fill(True)
+pp.set_facecolor("lightgray")
+pp.set_edgecolor("k")
+plt.show()

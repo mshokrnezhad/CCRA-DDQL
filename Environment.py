@@ -3,7 +3,6 @@ from Request import Request
 from Service import Service
 from Functions import specify_requests_entry_nodes, assign_requests_to_services
 from WFCCRA import WFCCRA
-from RCCRA import RCCRA
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
@@ -53,7 +52,7 @@ class Environment:
 
         resulted_state = self.get_state(result["pair"][0], switch)
 
-        return resulted_state, int(reward), result["done"], result["info"], result["OF"]
+        return resulted_state, int(reward), result["done"], result["info"], result["OF"], result["delay"]
 
     def update_state(self, action, result):
         self.net_obj.update_state(action, result, self.req_obj)
