@@ -8,7 +8,7 @@ rnd = np.random
 
 class Agent(object):
     def __init__(self, NUM_ACTIONS, INPUT_SHAPE, NAME="", EPSILON=1, GAMMA=0.99, LR=0.0001,
-                 MEMORY_SIZE=50000, BATCH_SIZE=32, EPSILON_MIN=0, EPSILON_DEC=5e-6,
+                 MEMORY_SIZE=50000, BATCH_SIZE=32, EPSILON_MIN=0.1, EPSILON_DEC=5e-6,
                  REPLACE_COUNTER=1000, CHECKPOINT_DIR='models/'):  # EPSILON_MIN=0.01, EPSILON_DEC=1e-5,
         self.GAMMA = GAMMA
         self.EPSILON = EPSILON

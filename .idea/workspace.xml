@@ -2,33 +2,89 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="631a9370-b8ef-431f-b227-6cfaa9032c73" name="Changes" comment="This is the 2nd stable version...">
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_cost_50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_nar_100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_diff_eps_decs_cost_100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_diff_eps_decs_reqs_100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-3_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-3_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-3_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-3_epss.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-3_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-3_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-4_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-4_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-4_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-4_epss.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-4_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-4_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-5_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-5_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-5_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-5_epss.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-5_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-5_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-6_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-6_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-6_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-6_epss.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-6_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-6_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-7_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-7_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-7_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-7_epss.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-7_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs/V12_K1_R100_S1_G10000_ml_5e-7_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_mins/V12_K1_R100_S1_G10000_ml_5e-6_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_mins/V12_K1_R100_S1_G10000_ml_5e-6_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_mins/V12_K1_R100_S1_G10000_ml_5e-6_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_mins/V12_K1_R100_S1_G10000_ml_5e-6_epss.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_mins/V12_K1_R100_S1_G10000_ml_5e-6_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_mins/V12_K1_R100_S1_G10000_ml_5e-6_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_cm_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_cm_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_cm_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_cm_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_dm_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_dm_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_dm_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_dm_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_lb_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_lb_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_lb_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_lb_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_ml_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_ml_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_ml_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_ml_epss.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_ml_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_ml_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_rnd_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_rnd_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_rnd_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_rnd_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_wf_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_wf_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_wf_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods/V12_K1_R100_S1_G10000_wf_reqs.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Environment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/Agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Network.py" beforeDir="false" afterPath="$PROJECT_DIR$/Network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RCCRA.py" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/RCCRA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VNF_Placement.py" beforeDir="false" afterPath="$PROJECT_DIR$/VNF_Placement.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WFCCRA.py" beforeDir="false" afterPath="$PROJECT_DIR$/WFCCRA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G10000_q_eval" beforeDir="false" afterPath="$PROJECT_DIR$/models/V12_K1_R100_S1_G10000_q_eval" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G10000_q_next" beforeDir="false" afterPath="$PROJECT_DIR$/models/V12_K1_R100_S1_G10000_q_next" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G5000_q_eval" beforeDir="false" afterPath="$PROJECT_DIR$/models/V12_K1_R100_S1_G5000_q_eval" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G5000_q_next" beforeDir="false" afterPath="$PROJECT_DIR$/models/V12_K1_R100_S1_G5000_q_next" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_cost_50.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_epsilons.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_epsilons.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_ml_avg_ofs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_ml_avg_ofs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_ml_nums_act_reqs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_ml_nums_act_reqs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_ml_nums_act_reqs_v2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_ml_nums_act_reqs_v2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_nar_100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_opt_avg_ofs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_opt_avg_ofs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_opt_nums_act_reqs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_opt_nums_act_reqs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_rewards.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_rewards.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_rnd_avg_ofs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_rnd_avg_ofs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/V12_K1_R100_S1_G5000_rnd_nums_act_reqs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/V12_K1_R100_S1_G5000_rnd_nums_act_reqs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G2000_q_eval" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G2000_q_next" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G50000_q_eval" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G50000_q_next" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G5000_q_eval" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G5000_q_next" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G500_q_eval" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G500_q_next" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R12_S1_G19999_q_eval" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R12_S1_G19999_q_next" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R12_S1_G20000_q_eval" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R12_S1_G20000_q_next" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,22 +128,23 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_mins" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_mins" />
+      <recent name="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs" />
+      <recent name="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000" />
-      <recent name="$PROJECT_DIR$/results/V12_K1_R12_S1_G20000" />
-      <recent name="$PROJECT_DIR$/tmp" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_eps_decs" />
+      <recent name="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/different_methods" />
       <recent name="$PROJECT_DIR$/tmp" />
       <recent name="$PROJECT_DIR$/results/V12_K1_R100_S1_G5000_v8" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/models" />
-      <recent name="$PROJECT_DIR$/figs" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -224,7 +281,8 @@
       <workItem from="1652350683109" duration="54098000" />
       <workItem from="1652768173859" duration="21166000" />
       <workItem from="1652952911635" duration="19144000" />
-      <workItem from="1653290855503" duration="19287000" />
+      <workItem from="1653290855503" duration="30894000" />
+      <workItem from="1653471504521" duration="14468000" />
     </task>
     <task id="LOCAL-00001" summary="Prepare the CPLEX file for Git. In this file, the original part of the code is commented as the package imported is a private and licensed package and cannot be executed over Binder. If you have the package installed and activated on your machine, download the repo and uncomment the original code and run it to see the expected results.">
       <created>1636367220623</created>
@@ -339,18 +397,13 @@
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
-          <line>207</line>
-          <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
           <line>20</line>
           <option name="timeStamp" value="96" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
-          <line>233</line>
+          <line>287</line>
           <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -362,6 +415,31 @@
           <url>file://$PROJECT_DIR$/WFCCRA.py</url>
           <line>259</line>
           <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
+          <line>353</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>28</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
+          <line>27</line>
+          <option name="timeStamp" value="120" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -380,7 +458,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CCRA_DDQL$main.coverage" NAME="main Coverage Results" MODIFIED="1653339384996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CCRA_DDQL$main.coverage" NAME="main Coverage Results" MODIFIED="1653512304785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RAPS_DRL$test.coverage" NAME="test Coverage Results" MODIFIED="1637171018702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RAPS_DRL$CPLEX_tmp.coverage" NAME="CPLEX_tmp Coverage Results" MODIFIED="1636188297758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RAPS_DRL$main.coverage" NAME="main Coverage Results" MODIFIED="1639071299197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

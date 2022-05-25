@@ -210,12 +210,16 @@ def simple_plot(x, y, filename="", avg_win=100):
 def multi_plot(x, Y, filename="", avg_win=100, axis_label="", C=[], L=[], lloc="", IsYScaleLog=False):
     fig = plt.figure(figsize=(8, 5))
     ax = plt.subplot(111)  # whole path
+    index_set = [i*10 for i in range(1000)]
 
     for y_index in range(len(Y)):
         y_avg = np.empty(len(Y[y_index]))
         for i in range(len(Y[y_index])):
             y_avg[i] = np.mean(Y[y_index][max(0, i - avg_win):(i + 1)])
-        ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+
+        # ax.plot(x, y_avg, color=C[y_index], label=L[y_index], linewidth=2)
+        # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+        ax.plot(range(1000), y_avg[index_set], color=C[y_index], label=L[y_index], linewidth=2)
 
     ax.set_xlabel("Game Number")
     ax.set_ylabel(axis_label)
@@ -223,7 +227,7 @@ def multi_plot(x, Y, filename="", avg_win=100, axis_label="", C=[], L=[], lloc="
     ax.tick_params(axis="y")
     plt.legend(bbox_to_anchor=lloc)  # loc="best"
 
-
+    """
     axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
 
     for y_index in range(len(Y)):
@@ -243,11 +247,12 @@ def multi_plot(x, Y, filename="", avg_win=100, axis_label="", C=[], L=[], lloc="
     # pp.set_fill(True)
     pp.set_facecolor("lightgray")
     pp.set_edgecolor("k")
-
+    """
 
     if IsYScaleLog:
         ax.set_yscale('log')
 
+    plt.grid()
     # plt.show()
     plt.savefig(filename)
 

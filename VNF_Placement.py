@@ -78,7 +78,7 @@ class VNF_Placement(object):
                 game_rwd += req_rwd
                 game_reqs = game_reqs + 1 if not done else game_reqs
                 game_of += req_of
-                game_dly += req_delay
+                game_dly += req_dly
                 game_stps += 1
 
                 self.agent.store_transition(state, a["node_id"], req_rwd, resulted_state, int(done))
@@ -115,17 +115,26 @@ class VNF_Placement(object):
                 'reqs: %.0f' % game_reqs,
                 'delay: %.2f' % avg_game_dly,
                 'dc_var: %.2f' % game_dc_var,
-                'reward: %.2f' % game_rwd,
+                'reward: %.2f' % bst_rwd,
                 'eps: %.4f' % self.agent.EPSILON,
                 'steps:', game_stps
             )
 
+        """
         save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_reqs")
         save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_avg_ofs")
-        save_list_to_file(rwds, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rwds")
-        save_list_to_file(epss, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_epss")
+        save_list_to_file(rwds, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_rwds")
+        save_list_to_file(epss, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_epss")
         save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_avg_dlys")
         save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_dc_vars")
+        """
+
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_avg_ofs")
+        save_list_to_file(rwds, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_rwds")
+        save_list_to_file(epss, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_epss")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_dc_vars")
 
     """
     def ddql_alloc_eval(self):
@@ -173,77 +182,187 @@ class VNF_Placement(object):
     """
 
     def rnd_alloc(self):
-        rnd_nums_act_reqs, rnd_avg_ofs = [], []
+        reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
 
         for i in range(self.NUM_GAMES):
             SEED = self.SEEDS[i]
             self.env_obj.reset(SEED)
-            rnd_game_num_act_reqs = 0
-            rnd_game_of = 0
+            BASE_DC_CAPACITIES = copy.deepcopy(self.env_obj.net_obj.DC_CAPACITIES)
+            game_reqs = 0
+            game_of = 0
+            game_dly = 0
+
             for r in self.env_obj.req_obj.REQUESTS:
                 ACTION_SEED = int(random.randrange(sys.maxsize) / (10 ** 15))  # 4
                 rnd.seed(ACTION_SEED)
                 a = {"req_id": r, "node_id": rnd.choice(self.env_obj.net_obj.NODES)}
-                resulted_state, req_reward, done, info, req_of = self.env_obj.step(a, "none")
-                if not done:
-                    rnd_game_num_act_reqs += 1
-                rnd_game_of += req_of
-            rnd_nums_act_reqs.append(rnd_game_num_act_reqs)
-            rnd_avg_game_of = 0 if rnd_game_num_act_reqs == 0 else rnd_game_of / rnd_game_num_act_reqs
-            rnd_avg_ofs.append(rnd_avg_game_of)
-            print('episode:', i, 'cost: %.0f, num_act_reqs: %.0f' % (rnd_avg_game_of, rnd_game_num_act_reqs))
+                resulted_state, req_rwd, done, info, req_of, req_dly = self.env_obj.step(a, "none")
 
-        save_list_to_file(rnd_nums_act_reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_nums_act_reqs")
-        save_list_to_file(rnd_avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_avg_ofs")
+                game_reqs = game_reqs + 1 if not done else game_reqs
+                game_of += req_of
+                game_dly += req_dly
+
+            reqs.append(game_reqs)
+
+            avg_game_of = 0 if game_reqs == 0 else game_of / game_reqs
+            avg_ofs.append(avg_game_of)
+
+            avg_game_dly = 0 if game_reqs == 0 else game_dly / game_reqs
+            avg_dlys.append(avg_game_dly)
+
+            game_dc_var = np.var(100 * (self.env_obj.net_obj.DC_CAPACITIES / BASE_DC_CAPACITIES))
+            dc_vars.append(game_dc_var)
+
+            print(
+                'episode:', i,
+                'cost: %.2f' % avg_game_of,
+                'reqs: %.0f' % game_reqs,
+                'delay: %.2f' % avg_game_dly,
+                'dc_var: %.2f' % game_dc_var,
+            )
+
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_dc_vars")
 
     def cm_alloc(self):
-        cm_nums_act_reqs, cm_avg_ofs = [], []
+        reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
 
         for i in range(self.NUM_GAMES):
             SEED = self.SEEDS[i]
             self.env_obj.reset(SEED)
-            cm_game_num_act_reqs = 0
-            cm_game_of = 0
+            BASE_DC_CAPACITIES = copy.deepcopy(self.env_obj.net_obj.DC_CAPACITIES)
+            game_reqs = 0
+            game_of = 0
+            game_dly = 0
+
             for r in self.env_obj.req_obj.REQUESTS:
                 a = {"req_id": r, "node_id": np.argmin(self.env_obj.net_obj.DC_COSTS)}
-                resulted_state, req_reward, done, info, req_of = self.env_obj.step(a, "none")
-                if not done:
-                    cm_game_num_act_reqs += 1
-                cm_game_of += req_of
-            cm_nums_act_reqs.append(cm_game_num_act_reqs)
-            cm_avg_game_of = 0 if cm_game_num_act_reqs == 0 else cm_game_of / cm_game_num_act_reqs
-            cm_avg_ofs.append(cm_avg_game_of)
-            print('episode:', i, 'cost: %.0f, num_act_reqs: %.0f' % (cm_avg_game_of, cm_game_num_act_reqs))
+                resulted_state, req_rwd, done, info, req_of, req_dly = self.env_obj.step(a, "none")
 
-        save_list_to_file(cm_nums_act_reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_nums_act_reqs")
-        save_list_to_file(cm_avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_avg_ofs")
+                game_reqs = game_reqs + 1 if not done else game_reqs
+                game_of += req_of
+                game_dly += req_dly
+
+            reqs.append(game_reqs)
+
+            avg_game_of = 0 if game_reqs == 0 else game_of / game_reqs
+            avg_ofs.append(avg_game_of)
+
+            avg_game_dly = 0 if game_reqs == 0 else game_dly / game_reqs
+            avg_dlys.append(avg_game_dly)
+
+            game_dc_var = np.var(100 * (self.env_obj.net_obj.DC_CAPACITIES / BASE_DC_CAPACITIES))
+            dc_vars.append(game_dc_var)
+
+            print(
+                'episode:', i,
+                'cost: %.2f' % avg_game_of,
+                'reqs: %.0f' % game_reqs,
+                'delay: %.2f' % avg_game_dly,
+                'dc_var: %.2f' % game_dc_var,
+            )
+
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_dc_vars")
 
     def dm_alloc(self):
-        dm_nums_act_reqs, dm_avg_ofs = [], []
+        reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
 
         for i in range(self.NUM_GAMES):
             SEED = self.SEEDS[i]
             self.env_obj.reset(SEED)
-            dm_game_num_act_reqs = 0
-            dm_game_of = 0
+            BASE_DC_CAPACITIES = copy.deepcopy(self.env_obj.net_obj.DC_CAPACITIES)
+            game_reqs = 0
+            game_of = 0
+            game_dly = 0
+
             for r in self.env_obj.req_obj.REQUESTS:
                 node_delays = np.zeros(self.NUM_NODES)
                 for v in self.env_obj.net_obj.NODES:
                     node_delay = self.env_obj.net_obj.find_argmin_e2e_delay_per_node_pair(self.env_obj.REQUESTS_ENTRY_NODES[r], v, self.env_obj.req_obj.CAPACITY_REQUIREMENTS[r])
                     node_delays[v] = node_delay if node_delay != -1 else 1000
                 a = {"req_id": r, "node_id": node_delays.argmin()}
-                resulted_state, req_reward, done, info, req_of = self.env_obj.step(a, "none")
-                if not done:
-                    dm_game_num_act_reqs += 1
-                dm_game_of += req_of
-                # print(a["node_id"], a["node_id"])
-            dm_nums_act_reqs.append(dm_game_num_act_reqs)
-            dm_avg_game_of = 0 if dm_game_num_act_reqs == 0 else dm_game_of / dm_game_num_act_reqs
-            dm_avg_ofs.append(dm_avg_game_of)
-            print('episode:', i, 'cost: %.0f, num_act_reqs: %.0f' % (dm_avg_game_of, dm_game_num_act_reqs))
+                resulted_state, req_rwd, done, info, req_of, req_dly = self.env_obj.step(a, "none")
 
-        save_list_to_file(dm_nums_act_reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_nums_act_reqs")
-        save_list_to_file(dm_avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_avg_ofs")
+                game_reqs = game_reqs + 1 if not done else game_reqs
+                game_of += req_of
+                game_dly += req_dly
+
+                # print(a["node_id"], a["node_id"])
+
+            reqs.append(game_reqs)
+
+            avg_game_of = 0 if game_reqs == 0 else game_of / game_reqs
+            avg_ofs.append(avg_game_of)
+
+            avg_game_dly = 0 if game_reqs == 0 else game_dly / game_reqs
+            avg_dlys.append(avg_game_dly)
+
+            game_dc_var = np.var(100 * (self.env_obj.net_obj.DC_CAPACITIES / BASE_DC_CAPACITIES))
+            dc_vars.append(game_dc_var)
+
+            print(
+                'episode:', i,
+                'cost: %.2f' % avg_game_of,
+                'reqs: %.0f' % game_reqs,
+                'delay: %.2f' % avg_game_dly,
+                'dc_var: %.2f' % game_dc_var,
+            )
+
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_dc_vars")
+
+    def lb_alloc(self):
+        reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
+
+        for i in range(self.NUM_GAMES):
+            SEED = self.SEEDS[i]
+            self.env_obj.reset(SEED)
+            BASE_DC_CAPACITIES = copy.deepcopy(self.env_obj.net_obj.DC_CAPACITIES)
+            game_reqs = 0
+            game_of = 0
+            game_dly = 0
+
+            for r in self.env_obj.req_obj.REQUESTS:
+                dcls = 100 * (self.env_obj.net_obj.DC_CAPACITIES / BASE_DC_CAPACITIES)
+                a = {"req_id": r, "node_id": dcls.argmax()}
+                resulted_state, req_rwd, done, info, req_of, req_dly = self.env_obj.step(a, "none")
+
+                game_reqs = game_reqs + 1 if not done else game_reqs
+                game_of += req_of
+                game_dly += req_dly
+
+                # print(a["node_id"], a["node_id"])
+
+            reqs.append(game_reqs)
+
+            avg_game_of = 0 if game_reqs == 0 else game_of / game_reqs
+            avg_ofs.append(avg_game_of)
+
+            avg_game_dly = 0 if game_reqs == 0 else game_dly / game_reqs
+            avg_dlys.append(avg_game_dly)
+
+            game_dc_var = np.var(100 * (self.env_obj.net_obj.DC_CAPACITIES / BASE_DC_CAPACITIES))
+            dc_vars.append(game_dc_var)
+
+            print(
+                'episode:', i,
+                'cost: %.2f' % avg_game_of,
+                'reqs: %.0f' % game_reqs,
+                'delay: %.2f' % avg_game_dly,
+                'dc_var: %.2f' % game_dc_var,
+            )
+
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_lb_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_lb_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_lb_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_lb_dc_vars")
 
     """
     def random_alloc(self):  # everything is random
