@@ -2,25 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="631a9370-b8ef-431f-b227-6cfaa9032c73" name="Changes" comment="This is the 2nd stable version...">
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_dm_avg_dlys.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_dm_avg_ofs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_dm_dc_vars.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_dm_reqs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_fig_cost_200.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_fig_nar_200.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_avg_dlys.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_avg_ofs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_dc_vars.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_epss.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_reqs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_dm_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_dm_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_dm_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_dm_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_fig_cost_100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_fig_cost_200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_fig_cost_50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_fig_nar_100.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_fig_nar_200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_fig_nar_50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_ml_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_ml_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_ml_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_ml_epss.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_ml_reqs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_ml_rwds.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_wf_avg_dlys.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_wf_avg_ofs.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_wf_dc_vars.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/changing_requirements/+ D10-11_C15-17_EPSMIN0.1_EPSDEC2e-5/V12_K1_R100_S1_G10000_wf_reqs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/Agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/Request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VNF_Placement.py" beforeDir="false" afterPath="$PROJECT_DIR$/VNF_Placement.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_0.01_avg_dlys.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_0.01_avg_ofs.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_0.01_dc_vars.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_0.01_epss.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_0.01_reqs.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/V12_K1_R100_S1_G10000/V12_K1_R100_S1_G10000_ml_0.01_rwds.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G10000_q_eval" beforeDir="false" afterPath="$PROJECT_DIR$/models/V12_K1_R100_S1_G10000_q_eval" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/V12_K1_R100_S1_G10000_q_next" beforeDir="false" afterPath="$PROJECT_DIR$/models/V12_K1_R100_S1_G10000_q_next" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,7 +227,7 @@
       <workItem from="1652768173859" duration="21166000" />
       <workItem from="1652952911635" duration="19144000" />
       <workItem from="1653290855503" duration="30894000" />
-      <workItem from="1653471504521" duration="48223000" />
+      <workItem from="1653471504521" duration="57571000" />
     </task>
     <task id="LOCAL-00001" summary="Prepare the CPLEX file for Git. In this file, the original part of the code is commented as the package imported is a private and licensed package and cannot be executed over Binder. If you have the package installed and activated on your machine, download the repo and uncomment the original code and run it to see the expected results.">
       <created>1636367220623</created>
@@ -334,7 +343,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
-          <line>285</line>
+          <line>287</line>
           <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -344,23 +353,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
-          <line>351</line>
+          <line>353</line>
           <option name="timeStamp" value="117" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
-          <line>42</line>
-          <option name="timeStamp" value="121" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
-          <line>34</line>
-          <option name="timeStamp" value="122" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/WFCCRA.py</url>
-          <line>262</line>
-          <option name="timeStamp" value="123" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Environment.py</url>
@@ -368,9 +362,14 @@
           <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Network.py</url>
-          <line>90</line>
-          <option name="timeStamp" value="126" />
+          <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
+          <line>111</line>
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/VNF_Placement.py</url>
+          <line>42</line>
+          <option name="timeStamp" value="128" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -389,7 +388,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CCRA_DDQL$main.coverage" NAME="main Coverage Results" MODIFIED="1653738108191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CCRA_DDQL$main.coverage" NAME="main Coverage Results" MODIFIED="1653759111873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RAPS_DRL$test.coverage" NAME="test Coverage Results" MODIFIED="1637171018702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RAPS_DRL$CPLEX_tmp.coverage" NAME="CPLEX_tmp Coverage Results" MODIFIED="1636188297758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RAPS_DRL$main.coverage" NAME="main Coverage Results" MODIFIED="1639071299197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

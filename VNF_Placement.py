@@ -50,10 +50,10 @@ class VNF_Placement(object):
                 'dc_var: %.2f' % result["dc_var"],
             )
 
-        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_wf_reqs")
-        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_wf_avg_ofs")
-        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_wf_avg_dlys")
-        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_wf_dc_vars")
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_wf_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_wf_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_wf_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_wf_dc_vars")
 
     def ddql_alloc_train(self):
         bst_rwd = -np.inf
@@ -128,14 +128,15 @@ class VNF_Placement(object):
         save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_avg_dlys")
         save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_dc_vars")
         """
+        suffix = ""
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_ml" + suffix + "_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_ml" + suffix + "_avg_ofs")
+        save_list_to_file(rwds, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_ml" + suffix + "_rwds")
+        save_list_to_file(epss, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_ml" + suffix + "_epss")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_ml" + suffix + "_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_ml" + suffix + "_dc_vars")
 
-        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_reqs")
-        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_avg_ofs")
-        save_list_to_file(rwds, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_rwds")
-        save_list_to_file(epss, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_epss")
-        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_avg_dlys")
-        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_dc_vars")
-
+    """
     def ddql_alloc_eval(self):
         self.agent.load_models()
         self.agent.EPSILON = 0
@@ -178,6 +179,7 @@ class VNF_Placement(object):
         save_list_to_file(rewards, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rewards_eval")
 
         # simple_plot(range(self.NUM_GAMES), ml_avg_ofs, filename="results/" + self.FILE_NAME + "/" + self.FILE_NAME + "_ml_avg_ofs" + '.png')
+    """
 
     def rnd_alloc(self):
         reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
@@ -219,10 +221,10 @@ class VNF_Placement(object):
                 'dc_var: %.2f' % game_dc_var,
             )
 
-        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_reqs")
-        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_avg_ofs")
-        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_avg_dlys")
-        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rnd_dc_vars")
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_rnd_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_rnd_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_rnd_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_rnd_dc_vars")
 
     def cm_alloc(self):
         reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
@@ -262,10 +264,10 @@ class VNF_Placement(object):
                 'dc_var: %.2f' % game_dc_var,
             )
 
-        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_reqs")
-        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_avg_ofs")
-        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_avg_dlys")
-        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_cm_dc_vars")
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_cm_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_cm_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_cm_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_cm_dc_vars")
 
     def dm_alloc(self):
         reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
@@ -311,10 +313,10 @@ class VNF_Placement(object):
                 'dc_var: %.2f' % game_dc_var,
             )
 
-        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_reqs")
-        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_avg_ofs")
-        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_avg_dlys")
-        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_dm_dc_vars")
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_dm_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_dm_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_dm_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_dm_dc_vars")
 
     def lb_alloc(self):
         reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
@@ -357,10 +359,10 @@ class VNF_Placement(object):
                 'dc_var: %.2f' % game_dc_var,
             )
 
-        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_lb_reqs")
-        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_lb_avg_ofs")
-        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_lb_avg_dlys")
-        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_lb_dc_vars")
+        save_list_to_file(reqs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_lb_reqs")
+        save_list_to_file(avg_ofs, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_lb_avg_ofs")
+        save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_lb_avg_dlys")
+        save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_lb_dc_vars")
 
     """
     def random_alloc(self):  # everything is random
