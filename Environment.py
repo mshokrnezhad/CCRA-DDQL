@@ -47,7 +47,8 @@ class Environment:
         if result["done"]:
             reward = 0
         else:
-            reward = self.net_obj.find_max_action_cost(self.req_obj.CAPACITY_REQUIREMENTS[action['req_id']], self.req_obj.BW_REQUIREMENTS[action['req_id']]) - result["OF"]
+            reward = self.net_obj.find_max_action_cost() - result["OF"]
+            reward = reward + 1000
             self.update_state(action, result)
 
         resulted_state = self.get_state(result["pair"][0], switch)

@@ -136,7 +136,6 @@ class VNF_Placement(object):
         save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_avg_dlys")
         save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_ml_" + str(self.agent.EPSILON_MIN) + "_dc_vars")
 
-    """
     def ddql_alloc_eval(self):
         self.agent.load_models()
         self.agent.EPSILON = 0
@@ -155,7 +154,7 @@ class VNF_Placement(object):
             for r in self.env_obj.req_obj.REQUESTS:
                 ACTION_SEED = int(random.randrange(sys.maxsize) / (10 ** 15))  # 4
                 a = {"req_id": r, "node_id": self.agent.choose_action(state, ACTION_SEED)}
-                resulted_state, req_reward, done, info, req_of = self.env_obj.step(a, "none")
+                resulted_state, req_reward, done, info, req_of, req_dly = self.env_obj.step(a, "none")
                 game_reward += req_reward
                 if not done:
                     ml_game_num_act_reqs += 1
@@ -179,7 +178,6 @@ class VNF_Placement(object):
         save_list_to_file(rewards, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rewards_eval")
 
         # simple_plot(range(self.NUM_GAMES), ml_avg_ofs, filename="results/" + self.FILE_NAME + "/" + self.FILE_NAME + "_ml_avg_ofs" + '.png')
-    """
 
     def rnd_alloc(self):
         reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []

@@ -235,7 +235,7 @@ class WFCCRA:
         sum_ofs = sum(costs.values())
         sum_delays = sum(delays.values())
         for r in self.req_obj.REQUESTS:
-            if costs[r] != -1:
+            if costs[r] != 0:
                 pairs[r] = (self.REQUESTS_ENTRY_NODES[r], resources[r][0])
                 priorities[r] = resources[r][1]
                 req_paths[r] = self.net_obj.PATHS_DETAILS[resources[r][2]]
@@ -247,7 +247,7 @@ class WFCCRA:
                 rpl_paths[r] = -1
 
         for key in costs:
-            if costs[key] != -1:
+            if costs[key] != 0:
                 reqs += 1
 
         solution["pairs"] = pairs
@@ -258,5 +258,8 @@ class WFCCRA:
         solution["avg_dly"] = 0 if reqs == 0 else sum_delays/reqs
         solution["reqs"] = reqs
         solution["dc_var"] = np.var(100*(DC_CAPACITIES/BASE_DC_CAPACITIES))
+
+        xxxxx = sum(self.req_obj.CAPACITY_REQUIREMENTS)
+        yyyyy = sum(BASE_DC_CAPACITIES) - sum(DC_CAPACITIES)
 
         return solution
