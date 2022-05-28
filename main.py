@@ -15,7 +15,7 @@ SEEDS = read_list_from_file("inputs/", "SEEDS_100.txt", "int")
 
 vnf_plc_obj = VNF_Placement(NUM_NODES=NUM_NODES, NUM_REQUESTS=NUM_REQUESTS, NUM_SERVICES=NUM_SERVICES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS, NUM_GAMES=NUM_GAMES, SEEDS=SEEDS)
 # vnf_plc_obj.wf_alloc()
-vnf_plc_obj.ddql_alloc_train()
+# vnf_plc_obj.ddql_alloc_train()
 # vnf_plc_obj.ddql_alloc_eval()
 # vnf_plc_obj.rnd_alloc()
 # vnf_plc_obj.cm_alloc()
@@ -74,7 +74,7 @@ def generate_reqs_plot_for_different_eps_decs():
     filename = "results/" + vnf_plc_obj.FILE_NAME + "/" + vnf_plc_obj.FILE_NAME + "_fig" + "_diff_eps_decs_reqs_" + str(avg_win) + '.png'
     multi_plot(range(NUM_GAMES), [y3, y4, y5], filename, avg_win, "Number of Active Requests", C, L, lloc, False)
 
-# generate_cost_plot_for_different_methods()
-# generate_reqs_plot_for_different_methods()
+generate_cost_plot_for_different_methods()
+generate_reqs_plot_for_different_methods()
 # generate_cost_plot_for_different_eps_decs()
 # generate_reqs_plot_for_different_eps_decs()
