@@ -85,7 +85,7 @@ class VNF_Placement(object):
                 self.agent.learn()
 
                 state = resulted_state
-                # print(a["node_id"], req_reward)
+                # print(a["node_id"], req_rwd)
 
             rwds.append(game_rwd)
 
@@ -136,7 +136,6 @@ class VNF_Placement(object):
         save_list_to_file(avg_dlys, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_ml" + suffix + "_avg_dlys")
         save_list_to_file(dc_vars, "results/" + self.FILE_NAME + "/", "d_" + self.FILE_NAME + "_ml" + suffix + "_dc_vars")
 
-    """
     def ddql_alloc_eval(self):
         self.agent.load_models()
         self.agent.EPSILON = 0
@@ -179,7 +178,7 @@ class VNF_Placement(object):
         save_list_to_file(rewards, "results/" + self.FILE_NAME + "/", self.FILE_NAME + "_rewards_eval")
 
         # simple_plot(range(self.NUM_GAMES), ml_avg_ofs, filename="results/" + self.FILE_NAME + "/" + self.FILE_NAME + "_ml_avg_ofs" + '.png')
-    """
+
 
     def rnd_alloc(self):
         reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
@@ -281,11 +280,12 @@ class VNF_Placement(object):
             game_dly = 0
 
             for r in self.env_obj.req_obj.REQUESTS:
-                node_delays = np.zeros(self.NUM_NODES)
-                for v in self.env_obj.net_obj.NODES:
-                    node_delay = self.env_obj.net_obj.find_argmin_e2e_delay_per_node_pair(self.env_obj.REQUESTS_ENTRY_NODES[r], v, self.env_obj.req_obj.CAPACITY_REQUIREMENTS[r])
-                    node_delays[v] = node_delay if node_delay != -1 else 1000
-                a = {"req_id": r, "node_id": node_delays.argmin()}
+                # node_delays = np.zeros(self.NUM_NODES)
+                # for v in self.env_obj.net_obj.NODES:
+                    # node_delay = self.env_obj.net_obj.find_argmin_e2e_delay_per_node_pair(self.env_obj.REQUESTS_ENTRY_NODES[r], v, self.env_obj.req_obj.CAPACITY_REQUIREMENTS[r])
+                    # node_delays[v] = node_delay if node_delay != -1 else 1000
+                # a = {"req_id": r, "node_id": node_delays.argmin()}
+                a = {"req_id": r, "node_id": 0}
                 resulted_state, req_rwd, done, info, req_of, req_dly = self.env_obj.step(a, "none")
 
                 game_reqs = game_reqs + 1 if not done else game_reqs

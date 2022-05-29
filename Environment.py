@@ -47,13 +47,18 @@ class Environment:
         if result["done"]:
             reward = 0
         else:
-            reward = self.net_obj.find_max_action_cost() - result["OF"]
-            reward = reward + 1000
+            max_cost = self.net_obj.MAX_COST_PER_TIER[result["pair"][0]][self.net_obj.get_tier_num(result["pair"][1])]
+            min_cost = self.net_obj.MIN_COST_PER_TIER[result["pair"][0]][self.net_obj.get_tier_num(result["pair"][1])]
+            tier_cost_range = max_cost - min_cost
+            action_efficiency_range = 100
+            action_efficiency = action_efficiency_range - (action_efficiency_range * (result["OF"] - min_cost) / tier_cost_range)
+            reward_base = 100
+            reward = reward_base ** (self.net_obj.get_tier_num(result["pair"][1]) + 1) + action_efficiency
             self.update_state(action, result)
 
         resulted_state = self.get_state(result["pair"][0], switch)
 
-        return resulted_state, int(reward), result["done"], result["info"], result["OF"], result["delay"]
+        return resulted_state, round(reward, 3), result["done"], result["info"], result["OF"], result["delay"]
 
     def update_state(self, action, result):
         self.net_obj.update_state(action, result, self.req_obj)

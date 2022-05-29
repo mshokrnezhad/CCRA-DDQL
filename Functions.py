@@ -217,9 +217,9 @@ def multi_plot(x, Y, filename="", avg_win=100, axis_label="", C=[], L=[], lloc="
         for i in range(len(Y[y_index])):
             y_avg[i] = np.mean(Y[y_index][max(0, i - avg_win):(i + 1)])
 
-        # ax.plot(x, y_avg, color=C[y_index], label=L[y_index], linewidth=2)
+        ax.plot(x, y_avg, color=C[y_index], label=L[y_index], linewidth=2)
         # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
-        ax.plot(range(1000), y_avg[index_set], color=C[y_index], label=L[y_index], linewidth=2)
+        # ax.plot(range(1000), y_avg[index_set], color=C[y_index], label=L[y_index], linewidth=2)
 
     ax.set_xlabel("Game Number")
     ax.set_ylabel(axis_label)

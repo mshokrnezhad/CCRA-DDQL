@@ -8,8 +8,8 @@ rnd = np.random
 
 class Request:
     def __init__(self, NUM_REQUESTS, NODES, REQUESTS_ENTRY_NODES, SEED=4, CAPACITY_REQUIREMENT_LB=4,
-                 CAPACITY_REQUIREMENT_UB=7, BW_REQUIREMENT_LB=2, BW_REQUIREMENT_UB=3, DLY_REQUIREMENT_LB=10,
-                 DLY_REQUIREMENT_UB=11, BURST_SIZE_LB=1, BURST_SIZE_UB=2
+                 CAPACITY_REQUIREMENT_UB=8, BW_REQUIREMENT_LB=2, BW_REQUIREMENT_UB=3, DLY_REQUIREMENT_LB=2,
+                 DLY_REQUIREMENT_UB=3, BURST_SIZE_LB=1, BURST_SIZE_UB=2
                  ):
 
         rnd.seed(SEED)
@@ -43,8 +43,7 @@ class Request:
         return bw_requirements
 
     def initialize_delay_requirements(self):
-        delay_requirements = np.array([rnd.randint(self.DLY_REQUIREMENT_LB, self.DLY_REQUIREMENT_UB)
-                                       for i in self.REQUESTS])
+        delay_requirements = np.array([rnd.randint(self.DLY_REQUIREMENT_LB, self.DLY_REQUIREMENT_UB) for i in self.REQUESTS])
 
         return delay_requirements
 

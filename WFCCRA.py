@@ -65,7 +65,7 @@ class WFCCRA:
                                 for l2 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
                                     d += self.net_obj.LINK_DELAYS[l2][k]
                                 d += self.net_obj.PACKET_SIZE / self.req_obj.CAPACITY_REQUIREMENTS[r]  # d += self.net_obj.PACKET_SIZE / (self.net_obj.DC_CAPACITIES[v] + self.EPSILON)
-                                if d <= self.req_obj.DELAY_REQUIREMENTS[r]:
+                                if self.net_obj.get_tier_num(v) == 0 or d <= self.req_obj.DELAY_REQUIREMENTS[r]:
                                     c += self.net_obj.DC_COSTS[v]  # * self.req_obj.CAPACITY_REQUIREMENTS[r]
                                     for l1 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
                                         c += self.net_obj.LINK_COSTS[l1]  # * self.req_obj.BW_REQUIREMENTS[r]
@@ -194,7 +194,7 @@ class WFCCRA:
                                         for l2 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
                                             d += self.net_obj.LINK_DELAYS[l2][k]
                                         d += self.net_obj.PACKET_SIZE / self.req_obj.CAPACITY_REQUIREMENTS[r]  # d += self.net_obj.PACKET_SIZE / (self.net_obj.DC_CAPACITIES[v] + self.EPSILON)
-                                        if d <= self.req_obj.DELAY_REQUIREMENTS[r]:
+                                        if self.net_obj.get_tier_num(v) == 0 or d <= self.req_obj.DELAY_REQUIREMENTS[r]:
                                             c += self.net_obj.DC_COSTS[v]  # * self.req_obj.CAPACITY_REQUIREMENTS[r]
                                             for l1 in np.where(self.net_obj.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
                                                 c += self.net_obj.LINK_COSTS[l1]  # * self.req_obj.BW_REQUIREMENTS[r]
@@ -258,8 +258,5 @@ class WFCCRA:
         solution["avg_dly"] = 0 if reqs == 0 else sum_delays/reqs
         solution["reqs"] = reqs
         solution["dc_var"] = np.var(100*(DC_CAPACITIES/BASE_DC_CAPACITIES))
-
-        xxxxx = sum(self.req_obj.CAPACITY_REQUIREMENTS)
-        yyyyy = sum(BASE_DC_CAPACITIES) - sum(DC_CAPACITIES)
 
         return solution

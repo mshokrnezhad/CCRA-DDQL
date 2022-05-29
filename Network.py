@@ -8,7 +8,7 @@ rnd = np.random
 class Network:
     def __init__(
             self, NUM_NODES, NUM_PRIORITY_LEVELS=1, SEED=4, NUM_TIERS=3, TIER_HEIGHT=100,
-            TIER_WIDTH=20, DC_CAPACITY_UNIT=100, DC_COST_RATIO=10, DC_COST_BASE=1, LINK_BW_LB=250, LINK_BW_UB=300,
+            TIER_WIDTH=20, DC_CAPACITY_UNIT=250, DC_COST_RATIO=50, DC_COST_BASE=1, LINK_BW_LB=250, LINK_BW_UB=300,
             LINK_COST_LB=10, LINK_COST_UB=20, BURST_SIZE_LIMIT=200, PACKET_SIZE=1, NUM_PATHS_UB=2, LINK_LENGTH_UB=5
     ): # BURST_SIZE_LIMIT=100, PACKET_SIZE=10
 
@@ -50,6 +50,8 @@ class Network:
         self.PATHS_DETAILS = self.find_all_paths()
         self.PATHS, self.PATHS_PER_HEAD, self.PATHS_PER_TAIL = self.find_all_path_indexes()
         self.LINKS_PATHS_MATRIX = self.match_paths_to_links()
+        self.MAX_COST_PER_TIER = self.find_max_cost_per_tier()
+        self.MIN_COST_PER_TIER = self.find_min_cost_per_tier()
 
     def get_tier_num(self, i):
 
@@ -81,7 +83,8 @@ class Network:
 
     def initialize_dc_capacities(self):
 
-        dc_capacities = np.array([rnd.randint(self.get_tier_num(i) * self.DC_CAPACITY_UNIT, (self.get_tier_num(i) + 1) * self.DC_CAPACITY_UNIT) for i in self.NODES])
+        # dc_capacities = np.array([rnd.randint(self.get_tier_num(i) * self.DC_CAPACITY_UNIT, (self.get_tier_num(i) + 1) * self.DC_CAPACITY_UNIT) for i in self.NODES])
+        dc_capacities = np.array([rnd.randint(self.DC_CAPACITY_UNIT, self.DC_CAPACITY_UNIT + 1) for i in self.NODES])
 
         return dc_capacities
 
@@ -288,7 +291,7 @@ class Network:
                     for p in range(len(new_paths)):
                         cost = 0
                         for v in range(len(new_paths[p]) - 1):
-                            cost += self.LINK_BWS_DICT[(new_paths[p][v], new_paths[p][v + 1])]
+                            cost += self.LINK_COSTS_DICT[(new_paths[p][v], new_paths[p][v + 1])]
                         path_costs[p] = cost
 
                     for p in range(self.NUM_PATHS_UB):
@@ -452,18 +455,57 @@ class Network:
                 self.LINK_BWS[l] -= req_obj.BW_REQUIREMENTS[r]
                 self.LINK_BURSTS[l, k] -= req_obj.BURST_SIZES[r]
 
-    def find_max_action_cost(self):
-        c1 = 0
-        for p in self.PATHS:
-            c2 = 0
-            for l in np.where(self.LINKS_PATHS_MATRIX[:, p] == 1)[0]:
-                c2 += self.LINK_COSTS[l]
-            if c2 > c1:
-                c1 = c2
-        c1 *= 2
-        c1 += self.DC_COSTS.max()
+    def find_max_cost_per_tier(self):
+        entry_nodes = self.get_first_tier_nodes()
+        costs = {}
+        for e in entry_nodes:
+            tiers_cost = {}
+            for t in range(self.NUM_TIERS):
+                nodes_cost = {}
+                for v in self.NODES:
+                    if self.get_tier_num(v) == t:
+                        c1 = 0
+                        for p1 in np.intersect1d(self.PATHS_PER_HEAD[e], self.PATHS_PER_TAIL[v]):
+                            c2 = 0
+                            for l in np.where(self.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
+                                c2 += self.LINK_COSTS[l]
+                            for p2 in np.intersect1d(self.PATHS_PER_HEAD[v], self.PATHS_PER_TAIL[e]):
+                                c3 = 0
+                                for l in np.where(self.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
+                                    c3 += self.LINK_COSTS[l]
+                                if c2 + c3 > c1:
+                                    c1 = c2 + c3
+                        c1 += self.DC_COSTS[v]
+                        nodes_cost[v] = c1
+                tiers_cost[t] = max(nodes_cost.values())
+            costs[e] = tiers_cost
+        return costs
 
-        return c1
+    def find_min_cost_per_tier(self):
+        entry_nodes = self.get_first_tier_nodes()
+        costs = {}
+        for e in entry_nodes:
+            tiers_cost = {}
+            for t in range(self.NUM_TIERS):
+                nodes_cost = {}
+                for v in self.NODES:
+                    if self.get_tier_num(v) == t:
+                        c1 = 10e10
+                        for p1 in np.intersect1d(self.PATHS_PER_HEAD[e], self.PATHS_PER_TAIL[v]):
+                            c2 = 0
+                            for l in np.where(self.LINKS_PATHS_MATRIX[:, p1] == 1)[0]:
+                                c2 += self.LINK_COSTS[l]
+                            for p2 in np.intersect1d(self.PATHS_PER_HEAD[v], self.PATHS_PER_TAIL[e]):
+                                c3 = 0
+                                for l in np.where(self.LINKS_PATHS_MATRIX[:, p2] == 1)[0]:
+                                    c3 += self.LINK_COSTS[l]
+                                if c2 + c3 < c1:
+                                    c1 = c2 + c3
+                        c1 = self.DC_COSTS[v] if c1 == 10e10 else c1 + self.DC_COSTS[v]
+                        nodes_cost[v] = c1
+                tiers_cost[t] = min(nodes_cost.values())
+            costs[e] = tiers_cost
+        return costs
 
     def find_max_path_cost(self):
         c1 = 0
