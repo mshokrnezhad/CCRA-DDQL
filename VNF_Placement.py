@@ -179,7 +179,6 @@ class VNF_Placement(object):
 
         # simple_plot(range(self.NUM_GAMES), ml_avg_ofs, filename="results/" + self.FILE_NAME + "/" + self.FILE_NAME + "_ml_avg_ofs" + '.png')
 
-
     def rnd_alloc(self):
         reqs, avg_ofs, avg_dlys, dc_vars = [], [], [], []
 
@@ -329,10 +328,20 @@ class VNF_Placement(object):
             game_of = 0
             game_dly = 0
 
+            assigned_node = 0
+            done = False
+            assigned_nodes = []
+
             for r in self.env_obj.req_obj.REQUESTS:
                 dcls = 100 * (self.env_obj.net_obj.DC_CAPACITIES / BASE_DC_CAPACITIES)
-                a = {"req_id": r, "node_id": dcls.argmax()}
+                for v in assigned_nodes:
+                    dcls[v] = 0
+                assigned_node = dcls.argmax()
+                a = {"req_id": r, "node_id": assigned_node}
                 resulted_state, req_rwd, done, info, req_of, req_dly = self.env_obj.step(a, "none")
+
+                if done:
+                    assigned_nodes.append(assigned_node)
 
                 game_reqs = game_reqs + 1 if not done else game_reqs
                 game_of += req_of
