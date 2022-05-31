@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
 from math import exp, log
 
+
 NUM_NODES = 12
 NUM_PRIORITY_LEVELS = 1
 NUM_REQUESTS = 100
