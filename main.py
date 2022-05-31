@@ -23,52 +23,6 @@ vnf_plc_obj = VNF_Placement(NUM_NODES=NUM_NODES, NUM_REQUESTS=NUM_REQUESTS, NUM_
 # vnf_plc_obj.dm_alloc()
 # vnf_plc_obj.rnd_alloc()  # vnf_plc_obj.lb_alloc()
 
-def generate_cost_plot_for_different_methods():
-    L = ["DDQL-CCRA", "WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA"]
-    type = "float"
-    avg_win = 10
-    lloc = (1, 0.6)  # 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
-    y1 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_ml_avg_ofs" + ".txt", type, round_num=2)
-    y2 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_wf_avg_ofs" + ".txt", type, round_num=2)
-    y3 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_rnd_avg_ofs" + ".txt", type, round_num=2)
-    y4 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_cm_avg_ofs" + ".txt", type, round_num=2)
-    y5 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_dm_avg_ofs" + ".txt", type, round_num=2)
-    filename = "results/" + vnf_plc_obj.FILE_NAME + "/" + "f_" + vnf_plc_obj.FILE_NAME + "_cost_" + str(avg_win) + '.png'
-    multi_plot(range(NUM_GAMES), [y1, y2, y3, y4, y5], filename, avg_win, "Cost per Request", C, L, lloc, False)
-def generate_reqs_plot_for_different_methods():
-    L = ["DDQL-CCRA", "WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA"]
-    type = "int"
-    avg_win = 100
-    lloc = (1, 0.4)  # 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
-    y1 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_ml_reqs" + ".txt", type, round_num=2)
-    y2 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_wf_reqs" + ".txt", type, round_num=2)
-    y3 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_rnd_reqs" + ".txt", type, round_num=2)
-    y4 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_cm_reqs" + ".txt", type, round_num=2)
-    y5 = read_list_from_file(dir, "d_" + vnf_plc_obj.FILE_NAME + "_dm_reqs" + ".txt", type, round_num=2)
-    filename = "results/" + vnf_plc_obj.FILE_NAME + "/" + "f_" + vnf_plc_obj.FILE_NAME + "_nar_" + str(avg_win) + '.png'
-    multi_plot(range(NUM_GAMES), [y1, y2, y3, y4, y5], filename, avg_win, "Num Active Requests", C, L, lloc, False)
-def generate_cost_plot_for_different_eps_decs():
-    type = "float"
-    avg_win = 100
-    lloc = (1, 0.6)  # 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
-    dir_suffix = "/different_eps_decs/"
-    L = ["5e-5", "5e-6", "5e-7"]
-    y3 = read_list_from_file(dir + dir_suffix, "d_" + vnf_plc_obj.FILE_NAME + "_ml_5e-5_avg_ofs" + ".txt", type, round_num=2)
-    y4 = read_list_from_file(dir + dir_suffix, "d_" + vnf_plc_obj.FILE_NAME + "_ml_5e-6_avg_ofs" + ".txt", type, round_num=2)
-    #y5 = read_list_from_file(dir + dir_suffix, "d_" + vnf_plc_obj.FILE_NAME + "_ml_5e-7_avg_ofs" + ".txt", type, round_num=2)
-    filename = "results/" + vnf_plc_obj.FILE_NAME + "/" + "d_" + vnf_plc_obj.FILE_NAME + "_fig" + "_diff_eps_decs_cost_" + str(avg_win) + '.png'
-    multi_plot(range(NUM_GAMES), [y3, y4, y5], filename, avg_win, "Cost per Request", C, L, lloc, False)
-def generate_reqs_plot_for_different_eps_decs():
-    type = "float"
-    avg_win = 100
-    lloc = (1, 0.6)  # 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
-    dir_suffix = "/different_eps_decs/"
-    L = ["5e-5", "5e-6", "5e-7"]
-    y3 = read_list_from_file(dir + dir_suffix, vnf_plc_obj.FILE_NAME + "_ml_5e-5_reqs" + ".txt", type, round_num=2)
-    y4 = read_list_from_file(dir + dir_suffix, vnf_plc_obj.FILE_NAME + "_ml_5e-6_reqs" + ".txt", type, round_num=2)
-    y5 = read_list_from_file(dir + dir_suffix, vnf_plc_obj.FILE_NAME + "_ml_5e-7_reqs" + ".txt", type, round_num=2)
-    filename = "results/" + vnf_plc_obj.FILE_NAME + "/" + vnf_plc_obj.FILE_NAME + "_fig" + "_diff_eps_decs_reqs_" + str(avg_win) + '.png'
-    multi_plot(range(NUM_GAMES), [y3, y4, y5], filename, avg_win, "Number of Active Requests", C, L, lloc, False)
 def generate_costs_plot_for_different_methods_and_changing_requirements():
     dir = "results/" + vnf_plc_obj.FILE_NAME + "_v3/"
     color_list = ["b", "g", "r", "darkviolet", "goldenrod"]
@@ -399,11 +353,559 @@ def generate_dlys_plot_for_different_methods_and_changing_requirements():
     plt.grid(alpha=0.3)
     # plt.show()
     plt.savefig(filename)  # format='eps'
+def generate_costs_plot_for_different_eps_decs():
+    dir = "results/" + vnf_plc_obj.FILE_NAME + "/"
+    color_list = ["b", "g", "r", "darkviolet", "goldenrod"]
+    # color_list = ["C1", "C2", "C3", "C4", "C5"]
+    method_list = ["5e-4", "5e-6", "5e-8"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    type = "float"
+    avg_win = 1000
+    lloc = 'lower left'  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
+    x_label = "Game Number"
+    y_label = "Cost/Request"
+    IsYScaleLog = False
+    filename = dir + "f_" + vnf_plc_obj.FILE_NAME + "_costs_" + str(avg_win) + '.png'
+    figsize = (6, 4)
+    index_set_size = 100
+    index_set_limit = int(NUM_GAMES / index_set_size)
+    x_min = 0
+    x_max = index_set_size - 1
+    y_min = -1
+    y_max = 37
+    sqr_root = 3
 
-# generate_cost_plot_for_different_methods()
-# generate_reqs_plot_for_different_methods()
-# generate_cost_plot_for_different_eps_decs()
-# generate_reqs_plot_for_different_eps_decs()
+    x = range(NUM_GAMES)
+    y1 = read_list_from_file(dir + "1/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_avg_ofs" + ".txt", type, round_num=2)
+    y2 = read_list_from_file(dir + "2/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_avg_ofs" + ".txt", type, round_num=2)
+    y3 = read_list_from_file(dir + "3/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_avg_ofs" + ".txt", type, round_num=2)
+
+    y1_avg = np.empty(len(y1))
+    y2_avg = np.empty(len(y2))
+    y3_avg = np.empty(len(y3))
+    for i in range(len(y1)):
+        tmp = np.mean(y1[max(0, i - avg_win):(i + 1)])
+        y1_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y2[max(0, i - avg_win):(i + 1)])
+        y2_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y3[max(0, i - avg_win):(i + 1)])
+        y3_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+
+    fig = plt.figure(figsize=figsize)
+    ax = plt.subplot(111)  # whole path
+    index_set = [i * index_set_limit for i in range(index_set_size)]
+
+    if IsYScaleLog:
+        ax.set_yscale('log')
+
+    ax.plot(range(index_set_size), y1_avg[index_set], color=color_list[0], label=method_list[0], linewidth=1, marker=marker_list[0], alpha=0.5)
+    ax.plot(range(index_set_size), y2_avg[index_set], color=color_list[1], label=method_list[1], linewidth=1, marker=marker_list[1], alpha=0.5)
+    ax.plot(range(index_set_size), y3_avg[index_set], color=color_list[2], label=method_list[2], linewidth=1, marker=marker_list[2], alpha=0.5)
+
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.tick_params(axis="x")
+    ax.tick_params(axis="y")
+    plt.legend(loc=lloc)  # loc=lloc bbox_to_anchor=lloc
+    ax.set_xlim(x_min, x_max)
+    x_ticks = [10 * i for i in range(10)]
+    x_ticks.append(index_set_size - 1)
+    ax.set_xticks(x_ticks)
+    x_tick_labels = [(10 * i) * index_set_limit for i in range(10)]
+    x_tick_labels.append(NUM_GAMES)
+    ax.set_xticklabels(x_tick_labels)
+    ax.set_ylim(y_min, y_max)
+    ax.set_yticks([i*5 for i in range(8)])
+    ax.set_yticklabels([i*5*20 for i in range(8)])
+
+    """
+    axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
+
+    y_index = 0
+    for nl in name_list:
+        # ax.plot(x, Y[nl], color=color_list[y_index], label=method_list[y_index], linewidth=2)
+        # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+        ax.plot(range(index_set_size), Y[nl][index_set], color=color_list[y_index], label=method_list[y_index], linewidth=1, marker=marker_list[y_index], alpha=0.5)
+        y_index += 1
+
+    x1, x2, y1, y2 = 98, 99, 85, 100
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+    #axins.set_xticks([4996, 4998, 5000])
+    #axins.set_xticklabels([4996, 4998, 5000])
+    #axins.set_yticks([1060, 1062, 1064, 1066, 1068])
+
+    pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
+    # pp.set_fill(True)
+    pp.set_facecolor("lightgray")
+    pp.set_edgecolor("k")
+    """
+
+    plt.grid(alpha=0.3)
+    # plt.show()
+    plt.savefig(filename)  # format='eps'
+def generate_reqs_plot_for_different_eps_decs():
+    dir = "results/" + vnf_plc_obj.FILE_NAME + "/"
+    color_list = ["b", "g", "r", "darkviolet", "goldenrod"]
+    # color_list = ["C1", "C2", "C3", "C4", "C5"]
+    method_list = ["5e-4", "5e-6", "5e-8"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    type = "float"
+    avg_win = 1000
+    lloc = 'lower right'  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
+    x_label = "Game Number"
+    y_label = "% Request"
+    IsYScaleLog = False
+    filename = dir + "f_" + vnf_plc_obj.FILE_NAME + "_reqs_" + str(avg_win) + '.png'
+    figsize = (6, 4)
+    index_set_size = 100
+    index_set_limit = int(NUM_GAMES / index_set_size)
+    x_min = 0
+    x_max = index_set_size - 1
+    y_min = -1
+    y_max = 37
+    sqr_root = 1
+
+    x = range(NUM_GAMES)
+    y1 = read_list_from_file(dir + "1/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_reqs" + ".txt", type, round_num=2)
+    y2 = read_list_from_file(dir + "2/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_reqs" + ".txt", type, round_num=2)
+    y3 = read_list_from_file(dir + "3/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_reqs" + ".txt", type, round_num=2)
+
+    y1_avg = np.empty(len(y1))
+    y2_avg = np.empty(len(y2))
+    y3_avg = np.empty(len(y3))
+    for i in range(len(y1)):
+        tmp = np.mean(y1[max(0, i - avg_win):(i + 1)])
+        y1_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y2[max(0, i - avg_win):(i + 1)])
+        y2_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y3[max(0, i - avg_win):(i + 1)])
+        y3_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+
+    fig = plt.figure(figsize=figsize)
+    ax = plt.subplot(111)  # whole path
+    index_set = [i * index_set_limit for i in range(index_set_size)]
+
+    if IsYScaleLog:
+        ax.set_yscale('log')
+
+    ax.plot(range(index_set_size), y1_avg[index_set], color=color_list[0], label=method_list[0], linewidth=1, marker=marker_list[0], alpha=0.5)
+    ax.plot(range(index_set_size), y2_avg[index_set], color=color_list[1], label=method_list[1], linewidth=1, marker=marker_list[1], alpha=0.5)
+    ax.plot(range(index_set_size), y3_avg[index_set], color=color_list[2], label=method_list[2], linewidth=1, marker=marker_list[2], alpha=0.5)
+
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.tick_params(axis="x")
+    ax.tick_params(axis="y")
+    plt.legend(loc=lloc)  # loc=lloc bbox_to_anchor=lloc
+    ax.set_xlim(x_min, x_max)
+    x_ticks = [10 * i for i in range(10)]
+    x_ticks.append(index_set_size - 1)
+    ax.set_xticks(x_ticks)
+    x_tick_labels = [(10 * i) * index_set_limit for i in range(10)]
+    x_tick_labels.append(NUM_GAMES)
+    ax.set_xticklabels(x_tick_labels)
+    #ax.set_ylim(y_min, y_max)
+    #ax.set_yticks([i*5 for i in range(8)])
+    #ax.set_yticklabels([i*5*20 for i in range(8)])
+
+    """
+    axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
+
+    y_index = 0
+    for nl in name_list:
+        # ax.plot(x, Y[nl], color=color_list[y_index], label=method_list[y_index], linewidth=2)
+        # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+        ax.plot(range(index_set_size), Y[nl][index_set], color=color_list[y_index], label=method_list[y_index], linewidth=1, marker=marker_list[y_index], alpha=0.5)
+        y_index += 1
+
+    x1, x2, y1, y2 = 98, 99, 85, 100
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+    #axins.set_xticks([4996, 4998, 5000])
+    #axins.set_xticklabels([4996, 4998, 5000])
+    #axins.set_yticks([1060, 1062, 1064, 1066, 1068])
+
+    pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
+    # pp.set_fill(True)
+    pp.set_facecolor("lightgray")
+    pp.set_edgecolor("k")
+    """
+
+    plt.grid(alpha=0.3)
+    # plt.show()
+    plt.savefig(filename)  # format='eps'
+def generate_rwds_plot_for_different_eps_decs():
+    dir = "results/" + vnf_plc_obj.FILE_NAME + "/"
+    color_list = ["b", "g", "r", "darkviolet", "goldenrod"]
+    # color_list = ["C1", "C2", "C3", "C4", "C5"]
+    method_list = ["5e-4", "5e-6", "5e-8"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    type = "float"
+    avg_win = 1000
+    lloc = (1, 0.5)  # 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
+    x_label = "Game Number"
+    y_label = "Game Reward"
+    IsYScaleLog = False
+    filename = dir + "f_" + vnf_plc_obj.FILE_NAME + "_rwds_" + str(avg_win) + '.png'
+    figsize = (6, 4)
+    index_set_size = 100
+    index_set_limit = int(NUM_GAMES / index_set_size)
+    x_min = 0
+    x_max = index_set_size - 1
+    y_min = -1
+    y_max = 37
+    sqr_root = 1
+
+    x = range(NUM_GAMES)
+    y1 = read_list_from_file(dir + "1/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_rwds" + ".txt", type, round_num=2)
+    y2 = read_list_from_file(dir + "2/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_rwds" + ".txt", type, round_num=2)
+    y3 = read_list_from_file(dir + "3/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_rwds" + ".txt", type, round_num=2)
+
+    y1_avg = np.empty(len(y1))
+    y2_avg = np.empty(len(y2))
+    y3_avg = np.empty(len(y3))
+    for i in range(len(y1)):
+        tmp = np.mean(y1[max(0, i - avg_win):(i + 1)])
+        y1_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y2[max(0, i - avg_win):(i + 1)])
+        y2_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y3[max(0, i - avg_win):(i + 1)])
+        y3_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+
+    fig = plt.figure(figsize=figsize)
+    ax = plt.subplot(111)  # whole path
+    index_set = [i * index_set_limit for i in range(index_set_size)]
+
+    if IsYScaleLog:
+        ax.set_yscale('log')
+
+    ax.plot(range(index_set_size), y1_avg[index_set], color=color_list[0], label=method_list[0], linewidth=1, marker=marker_list[0], alpha=0.5)
+    ax.plot(range(index_set_size), y2_avg[index_set], color=color_list[1], label=method_list[1], linewidth=1, marker=marker_list[1], alpha=0.5)
+    ax.plot(range(index_set_size), y3_avg[index_set], color=color_list[2], label=method_list[2], linewidth=1, marker=marker_list[2], alpha=0.5)
+
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.tick_params(axis="x")
+    ax.tick_params(axis="y")
+    plt.legend(bbox_to_anchor=lloc)  # loc=lloc bbox_to_anchor=lloc
+    ax.set_xlim(x_min, x_max)
+    x_ticks = [10 * i for i in range(10)]
+    x_ticks.append(index_set_size - 1)
+    ax.set_xticks(x_ticks)
+    x_tick_labels = [(10 * i) * index_set_limit for i in range(10)]
+    x_tick_labels.append(NUM_GAMES)
+    ax.set_xticklabels(x_tick_labels)
+    #ax.set_ylim(y_min, y_max)
+    #ax.set_yticks([i*5 for i in range(8)])
+    #ax.set_yticklabels([i*5*20 for i in range(8)])
+
+    """
+    axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
+
+    y_index = 0
+    for nl in name_list:
+        # ax.plot(x, Y[nl], color=color_list[y_index], label=method_list[y_index], linewidth=2)
+        # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+        ax.plot(range(index_set_size), Y[nl][index_set], color=color_list[y_index], label=method_list[y_index], linewidth=1, marker=marker_list[y_index], alpha=0.5)
+        y_index += 1
+
+    x1, x2, y1, y2 = 98, 99, 85, 100
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+    #axins.set_xticks([4996, 4998, 5000])
+    #axins.set_xticklabels([4996, 4998, 5000])
+    #axins.set_yticks([1060, 1062, 1064, 1066, 1068])
+
+    pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
+    # pp.set_fill(True)
+    pp.set_facecolor("lightgray")
+    pp.set_edgecolor("k")
+    """
+
+    plt.grid(alpha=0.3)
+    # plt.show()
+    plt.savefig(filename)  # format='eps'
+def generate_costs_plot_for_different_eps_mins():
+    dir = "results/" + vnf_plc_obj.FILE_NAME + "/"
+    color_list = ["b", "r", "g", "darkviolet", "goldenrod"]
+    # color_list = ["C1", "C2", "C3", "C4", "C5"]
+    method_list = ["0.1", "0.05", "0"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    type = "float"
+    avg_win = 1000
+    lloc = 'lower left'  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
+    x_label = "Game Number"
+    y_label = "Cost/Request"
+    IsYScaleLog = False
+    filename = dir + "f_" + vnf_plc_obj.FILE_NAME + "_costs_" + str(avg_win) + '.png'
+    figsize = (6, 4)
+    index_set_size = 100
+    index_set_limit = int(NUM_GAMES / index_set_size)
+    x_min = 0
+    x_max = index_set_size - 1
+    y_min = -1
+    y_max = 37
+    sqr_root = 3
+
+    x = range(NUM_GAMES)
+    y1 = read_list_from_file(dir + "4/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_avg_ofs" + ".txt", type, round_num=2)
+    y2 = read_list_from_file(dir + "5/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_avg_ofs" + ".txt", type, round_num=2)
+    y3 = read_list_from_file(dir + "2/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_avg_ofs" + ".txt", type, round_num=2)
+
+    y1_avg = np.empty(len(y1))
+    y2_avg = np.empty(len(y2))
+    y3_avg = np.empty(len(y3))
+    for i in range(len(y1)):
+        tmp = np.mean(y1[max(0, i - avg_win):(i + 1)])
+        y1_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y2[max(0, i - avg_win):(i + 1)])
+        y2_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y3[max(0, i - avg_win):(i + 1)])
+        y3_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+
+    fig = plt.figure(figsize=figsize)
+    ax = plt.subplot(111)  # whole path
+    index_set = [i * index_set_limit for i in range(index_set_size)]
+
+    if IsYScaleLog:
+        ax.set_yscale('log')
+
+    ax.plot(range(index_set_size), y1_avg[index_set], color=color_list[0], label=method_list[0], linewidth=1, marker=marker_list[0], alpha=0.5)
+    ax.plot(range(index_set_size), y2_avg[index_set], color=color_list[1], label=method_list[1], linewidth=1, marker=marker_list[1], alpha=0.5)
+    ax.plot(range(index_set_size), y3_avg[index_set], color=color_list[2], label=method_list[2], linewidth=1, marker=marker_list[2], alpha=0.5)
+
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.tick_params(axis="x")
+    ax.tick_params(axis="y")
+    plt.legend(loc=lloc)  # loc=lloc bbox_to_anchor=lloc
+    ax.set_xlim(x_min, x_max)
+    x_ticks = [10 * i for i in range(10)]
+    x_ticks.append(index_set_size - 1)
+    ax.set_xticks(x_ticks)
+    x_tick_labels = [(10 * i) * index_set_limit for i in range(10)]
+    x_tick_labels.append(NUM_GAMES)
+    ax.set_xticklabels(x_tick_labels)
+    ax.set_ylim(y_min, y_max)
+    ax.set_yticks([i*5 for i in range(8)])
+    ax.set_yticklabels([i*5*20 for i in range(8)])
+
+    """
+    axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
+
+    y_index = 0
+    for nl in name_list:
+        # ax.plot(x, Y[nl], color=color_list[y_index], label=method_list[y_index], linewidth=2)
+        # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+        ax.plot(range(index_set_size), Y[nl][index_set], color=color_list[y_index], label=method_list[y_index], linewidth=1, marker=marker_list[y_index], alpha=0.5)
+        y_index += 1
+
+    x1, x2, y1, y2 = 98, 99, 85, 100
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+    #axins.set_xticks([4996, 4998, 5000])
+    #axins.set_xticklabels([4996, 4998, 5000])
+    #axins.set_yticks([1060, 1062, 1064, 1066, 1068])
+
+    pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
+    # pp.set_fill(True)
+    pp.set_facecolor("lightgray")
+    pp.set_edgecolor("k")
+    """
+
+    plt.grid(alpha=0.3)
+    # plt.show()
+    plt.savefig(filename)  # format='eps'
+def generate_reqs_plot_for_different_eps_mins():
+    dir = "results/" + vnf_plc_obj.FILE_NAME + "/"
+    color_list = ["b", "r", "g", "darkviolet", "goldenrod"]
+    # color_list = ["C1", "C2", "C3", "C4", "C5"]
+    method_list = ["0.1", "0.05", "0"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    type = "float"
+    avg_win = 1000
+    lloc = 'lower right'  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
+    x_label = "Game Number"
+    y_label = "% Request"
+    IsYScaleLog = False
+    filename = dir + "f_" + vnf_plc_obj.FILE_NAME + "_reqs_" + str(avg_win) + '.png'
+    figsize = (6, 4)
+    index_set_size = 100
+    index_set_limit = int(NUM_GAMES / index_set_size)
+    x_min = 0
+    x_max = index_set_size - 1
+    y_min = -1
+    y_max = 37
+    sqr_root = 1
+
+    x = range(NUM_GAMES)
+    y1 = read_list_from_file(dir + "4/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_reqs" + ".txt", type, round_num=2)
+    y2 = read_list_from_file(dir + "5/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_reqs" + ".txt", type, round_num=2)
+    y3 = read_list_from_file(dir + "2/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_reqs" + ".txt", type, round_num=2)
+
+    y1_avg = np.empty(len(y1))
+    y2_avg = np.empty(len(y2))
+    y3_avg = np.empty(len(y3))
+    for i in range(len(y1)):
+        tmp = np.mean(y1[max(0, i - avg_win):(i + 1)])
+        y1_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y2[max(0, i - avg_win):(i + 1)])
+        y2_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y3[max(0, i - avg_win):(i + 1)])
+        y3_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+
+    fig = plt.figure(figsize=figsize)
+    ax = plt.subplot(111)  # whole path
+    index_set = [i * index_set_limit for i in range(index_set_size)]
+
+    if IsYScaleLog:
+        ax.set_yscale('log')
+
+    ax.plot(range(index_set_size), y1_avg[index_set], color=color_list[0], label=method_list[0], linewidth=1, marker=marker_list[0], alpha=0.5)
+    ax.plot(range(index_set_size), y2_avg[index_set], color=color_list[1], label=method_list[1], linewidth=1, marker=marker_list[1], alpha=0.5)
+    ax.plot(range(index_set_size), y3_avg[index_set], color=color_list[2], label=method_list[2], linewidth=1, marker=marker_list[2], alpha=0.5)
+
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.tick_params(axis="x")
+    ax.tick_params(axis="y")
+    plt.legend(loc=lloc)  # loc=lloc bbox_to_anchor=lloc
+    ax.set_xlim(x_min, x_max)
+    x_ticks = [10 * i for i in range(10)]
+    x_ticks.append(index_set_size - 1)
+    ax.set_xticks(x_ticks)
+    x_tick_labels = [(10 * i) * index_set_limit for i in range(10)]
+    x_tick_labels.append(NUM_GAMES)
+    ax.set_xticklabels(x_tick_labels)
+    #ax.set_ylim(y_min, y_max)
+    #ax.set_yticks([i*5 for i in range(8)])
+    #ax.set_yticklabels([i*5*20 for i in range(8)])
+
+    """
+    axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
+
+    y_index = 0
+    for nl in name_list:
+        # ax.plot(x, Y[nl], color=color_list[y_index], label=method_list[y_index], linewidth=2)
+        # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+        ax.plot(range(index_set_size), Y[nl][index_set], color=color_list[y_index], label=method_list[y_index], linewidth=1, marker=marker_list[y_index], alpha=0.5)
+        y_index += 1
+
+    x1, x2, y1, y2 = 98, 99, 85, 100
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+    #axins.set_xticks([4996, 4998, 5000])
+    #axins.set_xticklabels([4996, 4998, 5000])
+    #axins.set_yticks([1060, 1062, 1064, 1066, 1068])
+
+    pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
+    # pp.set_fill(True)
+    pp.set_facecolor("lightgray")
+    pp.set_edgecolor("k")
+    """
+
+    plt.grid(alpha=0.3)
+    # plt.show()
+    plt.savefig(filename)  # format='eps'
+def generate_rwds_plot_for_different_eps_mins():
+    dir = "results/" + vnf_plc_obj.FILE_NAME + "/"
+    color_list = ["b", "r", "g", "darkviolet", "goldenrod"]
+    # color_list = ["C1", "C2", "C3", "C4", "C5"]
+    method_list = ["0.1", "0.05", "0"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    type = "float"
+    avg_win = 1000
+    lloc = 'lower right'  # (1, 0.5) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
+    x_label = "Game Number"
+    y_label = "Game Reward"
+    IsYScaleLog = False
+    filename = dir + "f_" + vnf_plc_obj.FILE_NAME + "_rwds_" + str(avg_win) + '.png'
+    figsize = (6, 4)
+    index_set_size = 100
+    index_set_limit = int(NUM_GAMES / index_set_size)
+    x_min = 0
+    x_max = index_set_size - 1
+    y_min = -1
+    y_max = 37
+    sqr_root = 1
+
+    x = range(NUM_GAMES)
+    y1 = read_list_from_file(dir + "4/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_rwds" + ".txt", type, round_num=2)
+    y2 = read_list_from_file(dir + "5/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_rwds" + ".txt", type, round_num=2)
+    y3 = read_list_from_file(dir + "2/", "d_" + vnf_plc_obj.FILE_NAME + "_ml_rwds" + ".txt", type, round_num=2)
+
+    y1_avg = np.empty(len(y1))
+    y2_avg = np.empty(len(y2))
+    y3_avg = np.empty(len(y3))
+    for i in range(len(y1)):
+        tmp = np.mean(y1[max(0, i - avg_win):(i + 1)])
+        y1_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y2[max(0, i - avg_win):(i + 1)])
+        y2_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+        tmp = np.mean(y3[max(0, i - avg_win):(i + 1)])
+        y3_avg[i] = np.exp(np.log(tmp) / sqr_root) if tmp > 0 else 0
+
+    fig = plt.figure(figsize=figsize)
+    ax = plt.subplot(111)  # whole path
+    index_set = [i * index_set_limit for i in range(index_set_size)]
+
+    if IsYScaleLog:
+        ax.set_yscale('log')
+
+    ax.plot(range(index_set_size), y1_avg[index_set], color=color_list[0], label=method_list[0], linewidth=1, marker=marker_list[0], alpha=0.5)
+    ax.plot(range(index_set_size), y2_avg[index_set], color=color_list[1], label=method_list[1], linewidth=1, marker=marker_list[1], alpha=0.5)
+    ax.plot(range(index_set_size), y3_avg[index_set], color=color_list[2], label=method_list[2], linewidth=1, marker=marker_list[2], alpha=0.5)
+
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.tick_params(axis="x")
+    ax.tick_params(axis="y")
+    plt.legend(loc=lloc)  # bbox_to_anchor=lloc
+    ax.set_xlim(x_min, x_max)
+    x_ticks = [10 * i for i in range(10)]
+    x_ticks.append(index_set_size - 1)
+    ax.set_xticks(x_ticks)
+    x_tick_labels = [(10 * i) * index_set_limit for i in range(10)]
+    x_tick_labels.append(NUM_GAMES)
+    ax.set_xticklabels(x_tick_labels)
+    #ax.set_ylim(y_min, y_max)
+    #ax.set_yticks([i*5 for i in range(8)])
+    #ax.set_yticklabels([i*5*20 for i in range(8)])
+
+    """
+    axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
+
+    y_index = 0
+    for nl in name_list:
+        # ax.plot(x, Y[nl], color=color_list[y_index], label=method_list[y_index], linewidth=2)
+        # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+        ax.plot(range(index_set_size), Y[nl][index_set], color=color_list[y_index], label=method_list[y_index], linewidth=1, marker=marker_list[y_index], alpha=0.5)
+        y_index += 1
+
+    x1, x2, y1, y2 = 98, 99, 85, 100
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+    #axins.set_xticks([4996, 4998, 5000])
+    #axins.set_xticklabels([4996, 4998, 5000])
+    #axins.set_yticks([1060, 1062, 1064, 1066, 1068])
+
+    pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
+    # pp.set_fill(True)
+    pp.set_facecolor("lightgray")
+    pp.set_edgecolor("k")
+    """
+
+    plt.grid(alpha=0.3)
+    # plt.show()
+    plt.savefig(filename)  # format='eps'
+
 # generate_costs_plot_for_different_methods_and_changing_requirements()
 # generate_reqs_plot_for_different_methods_and_changing_requirements()
 # generate_dlys_plot_for_different_methods_and_changing_requirements()
+generate_costs_plot_for_different_eps_decs()
+generate_reqs_plot_for_different_eps_decs()
+generate_rwds_plot_for_different_eps_decs()
+# generate_costs_plot_for_different_eps_mins()
+# generate_reqs_plot_for_different_eps_mins()
+# generate_rwds_plot_for_different_eps_mins()
