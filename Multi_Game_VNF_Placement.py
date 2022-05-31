@@ -11,7 +11,7 @@ import copy
 rnd = np.random
 
 
-class VNF_Placement(object):
+class Multi_Game_VNF_Placement(object):
     def __init__(self, NUM_NODES, NUM_REQUESTS, NUM_SERVICES, NUM_PRIORITY_LEVELS, NUM_GAMES, SEEDS):
         self.SWITCH = "vnf_plc"
         self.NUM_NODES = NUM_NODES

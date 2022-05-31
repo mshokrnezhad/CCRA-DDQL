@@ -1,4 +1,4 @@
-from VNF_Placement import VNF_Placement
+from Multi_Game_VNF_Placement import Multi_Game_VNF_Placement
 from Functions import generate_seeds, read_list_from_file, simple_plot, multi_plot
 import numpy as np
 import sys
@@ -16,12 +16,12 @@ NUM_GAMES = 10000
 # generate_seeds(50000)
 SEEDS = read_list_from_file("inputs/", "SEEDS_100.txt", "int")
 
-vnf_plc_obj = VNF_Placement(NUM_NODES=NUM_NODES, NUM_REQUESTS=NUM_REQUESTS, NUM_SERVICES=NUM_SERVICES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS, NUM_GAMES=NUM_GAMES, SEEDS=SEEDS)
-# vnf_plc_obj.wf_alloc()
-# vnf_plc_obj.ddql_alloc_train()  # vnf_plc_obj.ddql_alloc_eval()
-# vnf_plc_obj.cm_alloc()
-# vnf_plc_obj.dm_alloc()
-# vnf_plc_obj.rnd_alloc()  # vnf_plc_obj.lb_alloc()
+mg_vnf_plc_obj = Multi_Game_VNF_Placement(NUM_NODES=NUM_NODES, NUM_REQUESTS=NUM_REQUESTS, NUM_SERVICES=NUM_SERVICES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS, NUM_GAMES=NUM_GAMES, SEEDS=SEEDS)
+mg_vnf_plc_obj.wf_alloc()
+# mg_vnf_plc_obj.ddql_alloc_train()  # vnf_plc_obj.ddql_alloc_eval()
+# mg_vnf_plc_obj.cm_alloc()
+# mg_vnf_plc_obj.dm_alloc()
+# mg_vnf_plc_obj.rnd_alloc()  # vnf_plc_obj.lb_alloc()
 
 def generate_costs_plot_for_different_methods_and_changing_requirements():
     dir = "results/" + vnf_plc_obj.FILE_NAME + "_v3/"
@@ -903,9 +903,9 @@ def generate_rwds_plot_for_different_eps_mins():
 # generate_costs_plot_for_different_methods_and_changing_requirements()
 # generate_reqs_plot_for_different_methods_and_changing_requirements()
 # generate_dlys_plot_for_different_methods_and_changing_requirements()
-generate_costs_plot_for_different_eps_decs()
-generate_reqs_plot_for_different_eps_decs()
-generate_rwds_plot_for_different_eps_decs()
+# generate_costs_plot_for_different_eps_decs()
+# generate_reqs_plot_for_different_eps_decs()
+# generate_rwds_plot_for_different_eps_decs()
 # generate_costs_plot_for_different_eps_mins()
 # generate_reqs_plot_for_different_eps_mins()
 # generate_rwds_plot_for_different_eps_mins()
