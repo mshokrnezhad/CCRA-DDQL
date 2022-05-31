@@ -269,6 +269,18 @@ def save_list_to_file(list, dir, file_name):
     f.close()
 
 
+def append_list_to_file(list, dir, file_name):
+    full_name = dir + file_name + ".txt"
+    os.makedirs(os.path.dirname(dir), exist_ok=True)
+    f = open(full_name, "a")
+    for i in range(len(list)):
+        if i < len(list) - 1:
+            f.write(str(list[i]) + "\n")
+        else:
+            f.write(str(list[i]))
+    f.close()
+
+
 def read_list_from_file(dir, file_name, type, round_num=2):
     f = open(dir + file_name, "r")  # opens the file in read mode
     list = f.read().splitlines()  # puts the file into an array

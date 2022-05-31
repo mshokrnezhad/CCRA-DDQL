@@ -8,7 +8,7 @@ rnd = np.random
 class Network:
     def __init__(
             self, NUM_NODES, NUM_PRIORITY_LEVELS=1, SEED=4, NUM_TIERS=3, TIER_HEIGHT=100,
-            TIER_WIDTH=20, DC_CAPACITY_UNIT=250, DC_COST_RATIO=50, DC_COST_BASE=1, LINK_BW_LB=250, LINK_BW_UB=300,
+            TIER_WIDTH=20, DC_CAPACITY_UNIT=100, DC_COST_RATIO=50, DC_COST_BASE=1, LINK_BW_LB=250, LINK_BW_UB=300,
             LINK_COST_LB=10, LINK_COST_UB=20, BURST_SIZE_LIMIT=200, PACKET_SIZE=1, NUM_PATHS_UB=2, LINK_LENGTH_UB=5
     ): # BURST_SIZE_LIMIT=100, PACKET_SIZE=10
 
@@ -298,6 +298,7 @@ class Network:
                         min_index = path_costs.argmin()
                         paths.append(new_paths[min_index])
                         path_costs[min_index] = 1000000
+
         # print("paths are found.")
         return paths
 
