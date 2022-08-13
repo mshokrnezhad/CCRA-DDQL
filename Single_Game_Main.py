@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
 from math import exp, log
 
-"""
+
 NUM_NODES = 12
 NUM_PRIORITY_LEVELS = 1
 MIN_NUM_REQUESTS = 50
@@ -22,17 +22,17 @@ sg_vnf_plc_obj = Single_Game_VNF_Placement(
     NUM_GAMES=NUM_GAMES, SEEDS=SEEDS, MIN_NUM_REQUESTS=MIN_NUM_REQUESTS, MAX_NUM_REQUESTS=MAX_NUM_REQUESTS, MODE="req"
 )
 
-for nr in range(MIN_NUM_REQUESTS, MAX_NUM_REQUESTS):
-    sg_vnf_plc_obj = Single_Game_VNF_Placement(
-        NUM_NODES=NUM_NODES, NUM_REQUESTS=nr, NUM_SERVICES=NUM_SERVICES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS,
-        NUM_GAMES=NUM_GAMES, SEEDS=SEEDS, MIN_NUM_REQUESTS=MIN_NUM_REQUESTS, MAX_NUM_REQUESTS=MAX_NUM_REQUESTS, MODE="req"
-    )
-    # sg_vnf_plc_obj.wf_alloc()
-    # sg_vnf_plc_obj.rnd_alloc()
-    # sg_vnf_plc_obj.cm_alloc()
-    # sg_vnf_plc_obj.dm_alloc()
+# for nr in range(MIN_NUM_REQUESTS, MAX_NUM_REQUESTS):
+#     sg_vnf_plc_obj = Single_Game_VNF_Placement(
+#         NUM_NODES=NUM_NODES, NUM_REQUESTS=nr, NUM_SERVICES=NUM_SERVICES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS,
+#         NUM_GAMES=NUM_GAMES, SEEDS=SEEDS, MIN_NUM_REQUESTS=MIN_NUM_REQUESTS, MAX_NUM_REQUESTS=MAX_NUM_REQUESTS, MODE="req"
+#     )
+# sg_vnf_plc_obj.wf_alloc()
+# sg_vnf_plc_obj.rnd_alloc()
+# sg_vnf_plc_obj.cm_alloc()
+# sg_vnf_plc_obj.dm_alloc()
     
-def generate_costs_plot_for_different_methods_and_changing_requirements():
+def generate_costs_plot_for_different_methods_and_requests():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
     color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
     # color_list = ["C1", "C2", "C3", "C4", "C5"]
@@ -42,11 +42,11 @@ def generate_costs_plot_for_different_methods_and_changing_requirements():
     type = "float"
     avg_win = 1000
     lloc = (0.68, 0.53)  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
-    x_label = "Game Number"
+    x_label = "Request Burstiness"
     y_label = "Cost per Request"
     IsYScaleLog = False
     filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_costs_" + str(avg_win) + '.png'
-    figsize = (6, 4)
+    figsize = (7, 5)
     index_set_size = 50
     index_set_limit = int((MAX_NUM_REQUESTS-MIN_NUM_REQUESTS)/index_set_size)
     x_min = 0
@@ -96,9 +96,9 @@ def generate_costs_plot_for_different_methods_and_changing_requirements():
     ax.set_yticklabels([100 * i for i in range(11)])
 
     plt.grid(alpha=0.3)
-    # plt.show()
+    plt.show()
     plt.savefig(filename)  # format='eps'
-def generate_reqs_plot_for_different_methods_and_changing_requirements():
+def generate_reqs_plot_for_different_methods_and_requests():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
     color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
     # color_list = ["C1", "C2", "C3", "C4", "C5"]
@@ -108,11 +108,11 @@ def generate_reqs_plot_for_different_methods_and_changing_requirements():
     type = "float"
     avg_win = 1000
     lloc = "center right"  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
-    x_label = "Game Number"
+    x_label = "Request Burstiness"
     y_label = "Num. Sup. Requests"
     IsYScaleLog = False
     filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_reqs_" + str(avg_win) + '.png'
-    figsize = (6, 4)
+    figsize = (7, 5)
     index_set_size = 50
     index_set_limit = int((MAX_NUM_REQUESTS - MIN_NUM_REQUESTS) / index_set_size)
     x_min = 0
@@ -177,10 +177,13 @@ def generate_reqs_plot_for_different_methods_and_changing_requirements():
     # ax.set_yticklabels([i ** 3 for i in range(9)])
 
     plt.grid(alpha=0.3)
-    # plt.show()
+    plt.show()
     plt.savefig(filename)  # format='eps'
-"""
 
+generate_costs_plot_for_different_methods_and_requests()
+generate_reqs_plot_for_different_methods_and_requests()
+
+"""
 MIN_NUM_NODES = 9
 MAX_NUM_NODES = 21 + 1
 NUM_PRIORITY_LEVELS = 1
@@ -194,19 +197,18 @@ sg_vnf_plc_obj = Single_Game_VNF_Placement(
     NUM_NODES=9, NUM_REQUESTS=NUM_REQUESTS, NUM_SERVICES=NUM_SERVICES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS,
     NUM_GAMES=NUM_GAMES, SEEDS=SEEDS, MODE="node"
 )
-"""
-for nn in range(MIN_NUM_NODES, MAX_NUM_NODES):
-    sg_vnf_plc_obj = Single_Game_VNF_Placement(
-        NUM_NODES=nn, NUM_REQUESTS=NUM_REQUESTS, NUM_SERVICES=NUM_SERVICES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS,
-        NUM_GAMES=NUM_GAMES, SEEDS=SEEDS, MODE="node"
-    )
-    sg_vnf_plc_obj.wf_alloc()
-    sg_vnf_plc_obj.rnd_alloc()
-    sg_vnf_plc_obj.cm_alloc()
-    sg_vnf_plc_obj.dm_alloc()
-"""
 
-def generate_costs_plot_for_different_methods_and_changing_requirements():
+# for nn in range(MIN_NUM_NODES, MAX_NUM_NODES):
+#     sg_vnf_plc_obj = Single_Game_VNF_Placement(
+#         NUM_NODES=nn, NUM_REQUESTS=NUM_REQUESTS, NUM_SERVICES=NUM_SERVICES, NUM_PRIORITY_LEVELS=NUM_PRIORITY_LEVELS,
+#         NUM_GAMES=NUM_GAMES, SEEDS=SEEDS, MODE="node"
+#     )
+#     sg_vnf_plc_obj.wf_alloc()
+#     sg_vnf_plc_obj.rnd_alloc()
+#     sg_vnf_plc_obj.cm_alloc()
+#     sg_vnf_plc_obj.dm_alloc()
+
+def generate_costs_plot_for_different_methods_and_nodes():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
     color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
     # color_list = ["C1", "C2", "C3", "C4", "C5"]
@@ -216,11 +218,11 @@ def generate_costs_plot_for_different_methods_and_changing_requirements():
     type = "float"
     avg_win = 1000
     lloc = (0.68, 0.53)  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
-    x_label = "Game Number"
+    x_label = "Network Size"
     y_label = "Cost per Request"
     IsYScaleLog = False
     filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_costs_" + str(avg_win) + '.png'
-    figsize = (6, 4)
+    figsize = (7, 5)
     index_set_size = 13
     index_set_limit = int((MAX_NUM_NODES - MIN_NUM_NODES) / index_set_size)
     x_min = 0
@@ -260,42 +262,40 @@ def generate_costs_plot_for_different_methods_and_changing_requirements():
     ax.tick_params(axis="y")
     plt.legend(bbox_to_anchor=lloc)  # loc=lloc bbox_to_anchor=lloc
     ax.set_xlim(x_min, x_max)
-    x_ticks = [5 * i for i in range(10)]
-    x_ticks.append(49)
+    x_ticks = [i for i in range(13)]
+    # x_ticks.append(49)
     ax.set_xticks(x_ticks)
-    x_tick_labels = [(5 * i) * index_set_limit + 50 for i in range(11)]
+    x_tick_labels = range(MIN_NUM_NODES, MAX_NUM_NODES)
     ax.set_xticklabels(x_tick_labels)
     ax.set_ylim(y_min, y_max)
-    ax.set_yticks([5 * i for i in range(11)])
-    ax.set_yticklabels([100 * i for i in range(11)])
+    ax.set_yticks([i*5 for i in range(11)])
+    ax.set_yticklabels([i ** 3 for i in range(11)])
 
-    """
-    axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
-
-    y_index = 0
-    for nl in name_list:
-        # ax.plot(x, Y[nl], color=color_list[y_index], label=method_list[y_index], linewidth=2)
-        # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
-        ax.plot(range(index_set_size), Y[nl][index_set], color=color_list[y_index], label=method_list[y_index], linewidth=1, marker=marker_list[y_index], alpha=0.5)
-        y_index += 1
-
-    x1, x2, y1, y2 = 98, 99, 85, 100
-    axins.set_xlim(x1, x2)
-    axins.set_ylim(y1, y2)
-    #axins.set_xticks([4996, 4998, 5000])
-    #axins.set_xticklabels([4996, 4998, 5000])
-    #axins.set_yticks([1060, 1062, 1064, 1066, 1068])
-
-    pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
-    # pp.set_fill(True)
-    pp.set_facecolor("lightgray")
-    pp.set_edgecolor("k")
-    """
+    # axins = zoomed_inset_axes(ax, 200, loc='lower left', bbox_to_anchor=(0.45,0.1), bbox_transform=ax.transAxes, borderpad=3, axes_kwargs={"facecolor": "honeydew"})
+    # 
+    # y_index = 0
+    # for nl in name_list:
+    #     # ax.plot(x, Y[nl], color=color_list[y_index], label=method_list[y_index], linewidth=2)
+    #     # ax.plot(x[avg_win:], y_avg[avg_win:], color=C[y_index], label=L[y_index])
+    #     ax.plot(range(index_set_size), Y[nl][index_set], color=color_list[y_index], label=method_list[y_index], linewidth=1, marker=marker_list[y_index], alpha=0.5)
+    #     y_index += 1
+    # 
+    # x1, x2, y1, y2 = 98, 99, 85, 100
+    # axins.set_xlim(x1, x2)
+    # axins.set_ylim(y1, y2)
+    # #axins.set_xticks([4996, 4998, 5000])
+    # #axins.set_xticklabels([4996, 4998, 5000])
+    # #axins.set_yticks([1060, 1062, 1064, 1066, 1068])
+    # 
+    # pp, p1, p2 = mark_inset(ax, axins, loc1=1, loc2=3)
+    # # pp.set_fill(True)
+    # pp.set_facecolor("lightgray")
+    # pp.set_edgecolor("k")
 
     plt.grid(alpha=0.3)
     # plt.show()
     plt.savefig(filename)  # format='eps'
-def generate_reqs_plot_for_different_methods_and_changing_requirements():
+def generate_reqs_plot_for_different_methods_and_nodes():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
     color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
     # color_list = ["C1", "C2", "C3", "C4", "C5"]
@@ -305,11 +305,11 @@ def generate_reqs_plot_for_different_methods_and_changing_requirements():
     type = "float"
     avg_win = 1000
     lloc = "center right"  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
-    x_label = "Game Number"
+    x_label = "Network Size"
     y_label = "Num. Sup. Requests"
     IsYScaleLog = False
     filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_reqs_" + str(avg_win) + '.png'
-    figsize = (6, 4)
+    figsize = (7, 5)
     index_set_size = 13
     index_set_limit = int((MAX_NUM_NODES - MIN_NUM_NODES) / index_set_size)
     x_min = 0
@@ -373,6 +373,8 @@ def generate_reqs_plot_for_different_methods_and_changing_requirements():
     plt.grid(alpha=0.3)
     # plt.show()
     plt.savefig(filename)  # format='eps'
+    print("done")
 
-generate_costs_plot_for_different_methods_and_changing_requirements()
-generate_reqs_plot_for_different_methods_and_changing_requirements()
+generate_costs_plot_for_different_methods_and_nodes()
+generate_reqs_plot_for_different_methods_and_nodes()
+"""
