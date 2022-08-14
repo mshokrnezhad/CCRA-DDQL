@@ -8,6 +8,8 @@ from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
 from math import exp, log
 
 
+"""
+# Mreqs Figures
 NUM_NODES = 12
 NUM_PRIORITY_LEVELS = 1
 MIN_NUM_REQUESTS = 50
@@ -45,7 +47,7 @@ def generate_costs_plot_for_different_methods_and_requests():
     x_label = "Request Burstiness"
     y_label = "Cost per Request"
     IsYScaleLog = False
-    filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_costs_" + str(avg_win) + '.png'
+    filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_costs_" + str(avg_win) + '.svg'
     figsize = (7, 5)
     index_set_size = 50
     index_set_limit = int((MAX_NUM_REQUESTS-MIN_NUM_REQUESTS)/index_set_size)
@@ -96,8 +98,8 @@ def generate_costs_plot_for_different_methods_and_requests():
     ax.set_yticklabels([100 * i for i in range(11)])
 
     plt.grid(alpha=0.3)
-    plt.show()
-    plt.savefig(filename)  # format='eps'
+    #plt.show()
+    plt.savefig(filename, format='svg', dpi=300)
 def generate_reqs_plot_for_different_methods_and_requests():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
     color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
@@ -111,7 +113,7 @@ def generate_reqs_plot_for_different_methods_and_requests():
     x_label = "Request Burstiness"
     y_label = "Num. Sup. Requests"
     IsYScaleLog = False
-    filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_reqs_" + str(avg_win) + '.png'
+    filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_reqs_" + str(avg_win) + '.svg'
     figsize = (7, 5)
     index_set_size = 50
     index_set_limit = int((MAX_NUM_REQUESTS - MIN_NUM_REQUESTS) / index_set_size)
@@ -177,13 +179,14 @@ def generate_reqs_plot_for_different_methods_and_requests():
     # ax.set_yticklabels([i ** 3 for i in range(9)])
 
     plt.grid(alpha=0.3)
-    plt.show()
-    plt.savefig(filename)  # format='eps'
+    # plt.show()
+    plt.savefig(filename, format='svg', dpi=300)
 
 generate_costs_plot_for_different_methods_and_requests()
 generate_reqs_plot_for_different_methods_and_requests()
-
 """
+
+# Mnodes FIgures
 MIN_NUM_NODES = 9
 MAX_NUM_NODES = 21 + 1
 NUM_PRIORITY_LEVELS = 1
@@ -221,7 +224,7 @@ def generate_costs_plot_for_different_methods_and_nodes():
     x_label = "Network Size"
     y_label = "Cost per Request"
     IsYScaleLog = False
-    filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_costs_" + str(avg_win) + '.png'
+    filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_costs_" + str(avg_win) + '.svg'
     figsize = (7, 5)
     index_set_size = 13
     index_set_limit = int((MAX_NUM_NODES - MIN_NUM_NODES) / index_set_size)
@@ -294,7 +297,7 @@ def generate_costs_plot_for_different_methods_and_nodes():
 
     plt.grid(alpha=0.3)
     # plt.show()
-    plt.savefig(filename)  # format='eps'
+    plt.savefig(filename, format='svg', dpi=300)
 def generate_reqs_plot_for_different_methods_and_nodes():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
     color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
@@ -308,7 +311,7 @@ def generate_reqs_plot_for_different_methods_and_nodes():
     x_label = "Network Size"
     y_label = "Num. Sup. Requests"
     IsYScaleLog = False
-    filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_reqs_" + str(avg_win) + '.png'
+    filename = dir + "f_" + sg_vnf_plc_obj.FILE_NAME + "_reqs_" + str(avg_win) + '.svg'
     figsize = (7, 5)
     index_set_size = 13
     index_set_limit = int((MAX_NUM_NODES - MIN_NUM_NODES) / index_set_size)
@@ -372,9 +375,7 @@ def generate_reqs_plot_for_different_methods_and_nodes():
 
     plt.grid(alpha=0.3)
     # plt.show()
-    plt.savefig(filename)  # format='eps'
-    print("done")
+    plt.savefig(filename, format='svg', dpi=300)
 
 generate_costs_plot_for_different_methods_and_nodes()
 generate_reqs_plot_for_different_methods_and_nodes()
-"""
