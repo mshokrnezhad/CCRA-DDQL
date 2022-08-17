@@ -119,7 +119,7 @@ def generate_costs_plot_for_different_methods_and_changing_requirements():
     """
 
     plt.grid(alpha=0.3)
-    plt.show()
+    # plt.show()
     plt.savefig(filename, format='svg', dpi=300)
 def generate_reqs_plot_for_different_methods_and_changing_requirements():
     dir = "results/" + mg_vnf_plc_obj.FILE_NAME + "_v3+/"
@@ -901,7 +901,7 @@ def generate_rwds_plot_for_different_eps_mins():
     # plt.show()
     plt.savefig(filename)  # format='eps'
 
-# generate_costs_plot_for_different_methods_and_changing_requirements()
+generate_costs_plot_for_different_methods_and_changing_requirements()
 # generate_reqs_plot_for_different_methods_and_changing_requirements()
 # generate_dlys_plot_for_different_methods_and_changing_requirements()
 # generate_costs_plot_for_different_eps_decs()

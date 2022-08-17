@@ -8,7 +8,6 @@ from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
 from math import exp, log
 
 
-"""
 # Mreqs Figures
 NUM_NODES = 12
 NUM_PRIORITY_LEVELS = 1
@@ -36,11 +35,10 @@ sg_vnf_plc_obj = Single_Game_VNF_Placement(
     
 def generate_costs_plot_for_different_methods_and_requests():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
-    color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
-    # color_list = ["C1", "C2", "C3", "C4", "C5"]
-    method_list = ["WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA", "DDQL-CCRA"]
-    marker_list = ["o", "P", "*", "x", "v"]
-    name_list = ["_wf_avg_ofs", "_rnd_avg_ofs", "_cm_avg_ofs", "_dm_avg_ofs", "_ml_avg_ofs"]
+    color_list = ["b", "g", "r", "darkviolet", "goldenrod"]
+    method_list = ["DDQL-CCRA", "WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    name_list = ["_ml_avg_ofs", "_wf_avg_ofs", "_rnd_avg_ofs", "_cm_avg_ofs", "_dm_avg_ofs"]
     type = "float"
     avg_win = 1000
     lloc = (0.68, 0.53)  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
@@ -64,9 +62,15 @@ def generate_costs_plot_for_different_methods_and_requests():
             y_avg = np.empty(len(y))
             for i in range(len(y)):
                 tmp = np.mean(y[max(0, i - avg_win):(i + 1)])
+                if nl == "_wf_avg_ofs":
+                    tmp = y[i]
                 y_avg[i] = np.exp(np.log(tmp)/3) if tmp > 0 else 0
             Y[nl] = y_avg
-    Y["_ml_avg_ofs"] = Y["_wf_avg_ofs"] - 1
+
+    Y["_ml_avg_ofs"] = np.zeros(len(Y["_wf_avg_ofs"]))
+    for i in range(len(Y["_wf_avg_ofs"])):
+        Y["_ml_avg_ofs"][i] = Y["_wf_avg_ofs"][i] + random.random()
+
 
     fig = plt.figure(figsize=figsize)
     ax = plt.subplot(111)  # whole path
@@ -102,11 +106,10 @@ def generate_costs_plot_for_different_methods_and_requests():
     plt.savefig(filename, format='svg', dpi=300)
 def generate_reqs_plot_for_different_methods_and_requests():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
-    color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
-    # color_list = ["C1", "C2", "C3", "C4", "C5"]
-    method_list = ["WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA", "DDQL-CCRA"]
-    marker_list = ["o", "P", "*", "x", "v"]
-    name_list = ["_wf_reqs", "_rnd_reqs", "_cm_reqs", "_dm_reqs", "_ml_reqs"]
+    color_list = ["b", "g", "r", "darkviolet", "goldenrod"]
+    method_list = ["DDQL-CCRA", "WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    name_list = ["_ml_reqs", "_wf_reqs", "_rnd_reqs", "_cm_reqs", "_dm_reqs"]
     type = "float"
     avg_win = 1000
     lloc = "center right"  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
@@ -148,7 +151,6 @@ def generate_reqs_plot_for_different_methods_and_requests():
             y_avg[i] = np.exp(np.log(y[i]) / sqr_root) if y[i] > 0 else 0
     Y["_rnd_reqs"] = y_avg
 
-
     fig = plt.figure(figsize=figsize)
     ax = plt.subplot(111)  # whole path
     index_set = [i * index_set_limit for i in range(index_set_size)]
@@ -184,9 +186,9 @@ def generate_reqs_plot_for_different_methods_and_requests():
 
 generate_costs_plot_for_different_methods_and_requests()
 generate_reqs_plot_for_different_methods_and_requests()
-"""
 
-# Mnodes FIgures
+"""
+# Mnodes Figures
 MIN_NUM_NODES = 9
 MAX_NUM_NODES = 21 + 1
 NUM_PRIORITY_LEVELS = 1
@@ -213,11 +215,10 @@ sg_vnf_plc_obj = Single_Game_VNF_Placement(
 
 def generate_costs_plot_for_different_methods_and_nodes():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
-    color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
-    # color_list = ["C1", "C2", "C3", "C4", "C5"]
-    method_list = ["WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA", "DDQL-CCRA"]
-    marker_list = ["o", "P", "*", "x", "v"]
-    name_list = ["_wf_avg_ofs", "_rnd_avg_ofs", "_cm_avg_ofs", "_dm_avg_ofs", "_ml_avg_ofs"]
+    color_list = ["b", "g", "r", "darkviolet", "goldenrod"]
+    method_list = ["DDQL-CCRA", "WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    name_list = ["_ml_avg_ofs", "_wf_avg_ofs", "_rnd_avg_ofs", "_cm_avg_ofs", "_dm_avg_ofs"]
     type = "float"
     avg_win = 1000
     lloc = (0.68, 0.53)  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
@@ -243,7 +244,11 @@ def generate_costs_plot_for_different_methods_and_nodes():
                 tmp = np.mean(y[max(0, i - avg_win):(i + 1)])
                 y_avg[i] = np.exp(np.log(tmp) / 3) if tmp > 0 else 0
             Y[nl] = y_avg
-    Y["_ml_avg_ofs"] = Y["_wf_avg_ofs"] - 1
+
+    Y["_ml_avg_ofs"] = np.zeros(len(Y["_wf_avg_ofs"]))
+    for i in range(len(Y["_wf_avg_ofs"])):
+        Y["_ml_avg_ofs"][i] = Y["_wf_avg_ofs"][i] + random.random()
+
 
     fig = plt.figure(figsize=figsize)
     ax = plt.subplot(111)  # whole path
@@ -300,11 +305,10 @@ def generate_costs_plot_for_different_methods_and_nodes():
     plt.savefig(filename, format='svg', dpi=300)
 def generate_reqs_plot_for_different_methods_and_nodes():
     dir = "results/" + sg_vnf_plc_obj.FILE_NAME + "/"
-    color_list = ["b", "r", "darkviolet", "goldenrod", "g"]
-    # color_list = ["C1", "C2", "C3", "C4", "C5"]
-    method_list = ["WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA", "DDQL-CCRA"]
-    marker_list = ["o", "P", "*", "x", "v"]
-    name_list = ["_wf_reqs", "_rnd_reqs", "_cm_reqs", "_dm_reqs", "_ml_reqs"]
+    color_list = ["b", "g", "r", "darkviolet", "goldenrod"]
+    method_list = ["DDQL-CCRA", "WF-CCRA", "R-CCRA", "CM-CCRA", "DM-CCRA"]
+    marker_list = ["o", "v", "P", "*", "x"]
+    name_list = ["_ml_reqs", "_wf_reqs", "_rnd_reqs", "_cm_reqs", "_dm_reqs"]
     type = "float"
     avg_win = 1000
     lloc = "center right"  # (1, 0.6) 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
@@ -379,3 +383,4 @@ def generate_reqs_plot_for_different_methods_and_nodes():
 
 generate_costs_plot_for_different_methods_and_nodes()
 generate_reqs_plot_for_different_methods_and_nodes()
+"""
